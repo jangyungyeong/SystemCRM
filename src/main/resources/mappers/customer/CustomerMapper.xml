@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jafa.repository.customer.CustomerRepository">
+
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<trim prefix="OR">
+				<choose>
+	    			<when test="type=='C'.toString()">
+	    				customerName like '%'||#{keyword}||'%'
+	    			</when>
+	    			<when test="type=='S'.toString()">
+	    				chargeStaff like '%'||#{keyword}||'%'
+	    			</when>
+	    			<when test="type=='G'.toString()">
+	    				customerGrade like '%'||#{keyword}||'%'
+	    			</when>
+	    		</choose>
+			</trim>
+		</trim>
+  	</sql>
+
+	<select id="customerList" resultType="customer">
+		<![CDATA[
+    	select * from
+    	(select /*+INDEX_DESC(Customer_tbl pk_customer)*/
+    		ROWNUM as rn, cno, CustomerName, sex, CustomerGrade, BirthYear, BirthMonth, BirthDate, FirPhoneNum, MidPhoneNum, LastPhoneNum, ChargeStaff
+			FROM Customer_tbl where
+    	]]>
+    	<include refid="criteria"/>
+		<![CDATA[	
+			rownum <= #{maxRow})
+			where rn > #{minRow}
+		]]>
+    </select>
+    
+    <insert id="insert">
+    	insert into Customer_tbl(cno, CustomerName, sex, CustomerGrade, BirthYear, BirthMonth, BirthDate, FirPhoneNum, MidPhoneNum, LastPhoneNum, ChargeStaff)
+    	values (seq_cust.nextval, #{customerName}, #{sex}, #{customerGrade}, #{birthYear}, #{birthMonth}, #{birthDate}, #{firPhoneNum}, #{midPhoneNum}, #{lastPhoneNum}, #{chargeStaff})
+    </insert>
+    
+    <insert id="insertSelectKey" keyColumn="cno" keyProperty="cno" useGeneratedKeys="true">
+    	insert into Customer_tbl(cno, CustomerName, sex, CustomerGrade, BirthYear, BirthMonth, BirthDate, FirPhoneNum, MidPhoneNum, LastPhoneNum, ChargeStaff)
+    	values (seq_cust.nextval, #{customerName}, #{sex}, #{customerGrade}, #{birthYear}, #{birthMonth}, #{birthDate}, #{firPhoneNum}, #{midPhoneNum}, #{lastPhoneNum}, #{chargeStaff})
+    </insert>
+    
+    <select id="read" resultType="customer">
+    	select * from Customer_tbl where cno=#{cno}
+    </select>
+    
+    <update id="update">
+    	update Customer_tbl set
+    	BirthYear=#{birthYear},
+    	BirthMonth=#{birthMonth},
+    	BirthDate=#{birthDate}, 
+    	FirPhoneNum=#{firPhoneNum}, 
+    	MidPhoneNum=#{midPhoneNum}, 
+    	LastPhoneNum=#{lastPhoneNum},
+    	ChargeStaff=#{chargeStaff}
+    	where cno=#{cno}
+    </update>
+    
+    <delete id="delete">
+    	delete from Customer_tbl where cno=#{cno}
+    </delete>
+    
+     <select id="getTotalCount" resultType="int">
+    	<trim suffixOverrides="WHERE|AND">
+    	select count(cno) from Customer_tbl where
+			<include refid="criteria"/>
+			cno > 0
+		</trim>
+    </select>
+</mapper>
