@@ -12,9 +12,9 @@ public interface StaffRepository {
 	
 	void update(StaffVO vo); // 직원정보 수정
 	
-	StaffVO selectById(String staffId); // 아이디 검색
+	StaffVO selectById(String staffId); // 아이디로 회원정보 검색
 	
-	String selectByEmail(String staffEmail); // 이메일 검색
+	String selectByEmail(String staffEmail); // 이메일로 아이디 검색
 	
 	void updatePassword( // 비밀번호 변경
 		@Param("staffId") String staffId,
