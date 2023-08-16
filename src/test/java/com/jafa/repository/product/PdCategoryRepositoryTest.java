@@ -1,7 +1,5 @@
 package com.jafa.repository.product;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.junit.Ignore;

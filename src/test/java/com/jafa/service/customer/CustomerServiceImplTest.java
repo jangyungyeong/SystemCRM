@@ -1,7 +1,5 @@
 package com.jafa.service.customer;
 
-import static org.junit.Assert.*;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.jafa.AppTest;
 import com.jafa.domain.Criteria;
 import com.jafa.domain.customer.CustomerVO;
-import com.jafa.service.customer.CustomerService;
 
 import lombok.extern.log4j.Log4j;
 

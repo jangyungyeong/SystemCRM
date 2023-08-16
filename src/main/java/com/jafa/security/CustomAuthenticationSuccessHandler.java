@@ -28,6 +28,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		
 		if (savedRequest != null) {
 			log.info(savedRequest.getRedirectUrl());
+			response.sendRedirect(savedRequest.getRedirectUrl());
 			return;
 		}
 		String prevPage = (String) request.getSession().getAttribute("prevPage");

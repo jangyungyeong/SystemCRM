@@ -8,7 +8,7 @@
 		<id property="staffId" column="staffId"/>
 	  	<result property="staffId" column="staffId"/>
 	  	<result property="staffPwd" column="staffPwd"/>
-	  	<result property="StaffName" column="StaffName"/>
+	  	<result property="staffName" column="staffName"/>
 	  	<result property="staffEmail" column="staffEmail"/>
 	  	<result property="staFirPhoneNum" column="staFirPhoneNum"/>
 	  	<result property="staMidPhoneNum" column="staMidPhoneNum"/>
@@ -35,7 +35,7 @@
 	
 	<insert id="insert">
 		insert into Staff_tbl(StaffId, StaffPwd, StaffName, StaffEmail, StaFirPhoneNum, StaMidPhoneNum, StaLastPhoneNum, StaffRank)
-		values(#{staffId}, #{staffPwd}, #{StaffName},#{staffEmail},#{staFirPhoneNum},#{staMidPhoneNum},#{staLastPhoneNum},#{staffRank})
+		values(#{staffId}, #{staffPwd}, #{staffName},#{staffEmail},#{staFirPhoneNum},#{staMidPhoneNum},#{staLastPhoneNum},#{staffRank})
 	</insert>
 	
 	<update id="update">

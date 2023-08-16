@@ -28,7 +28,7 @@ public class StaffRepositoryTest extends AppTest{
 		StaffVO vo = StaffVO.builder()
 				.staffId("han")
 				.staffPwd("4422")
-				.StaffName("한남자")
+				.staffName("한남자")
 				.staffEmail("han@test.com")
 				.staFirPhoneNum("010")
 				.staMidPhoneNum("9999")
@@ -44,7 +44,7 @@ public class StaffRepositoryTest extends AppTest{
 	public void testUpdate() {
 		StaffVO vo = StaffVO.builder()
 				.staffId("wang")
-				.StaffName("왕나봉")
+				.staffName("왕나봉")
 				.staffEmail("wang@test.com")
 				.staFirPhoneNum("010")
 				.staMidPhoneNum("3215")

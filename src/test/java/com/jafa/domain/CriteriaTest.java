@@ -1,10 +1,5 @@
 package com.jafa.domain;
 
-import static org.junit.Assert.*;
-
-import java.util.Arrays;
-
-import org.junit.Ignore;
 import org.junit.Test;
 
 import lombok.extern.log4j.Log4j;

@@ -23,7 +23,7 @@ public class StaffVO implements Serializable{
 	
 	private String staffId; // 직원아이디
 	private String staffPwd; // 직원비밀번호
-	private String StaffName; // 직원이름
+	private String staffName; // 직원이름
 	private String staffEmail; // 직원이메일
 	private String staFirPhoneNum; // 첫번째연락처
 	private String staMidPhoneNum; // 가운데연락처

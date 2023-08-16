@@ -2,7 +2,6 @@ package com.jafa.controller.product;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -15,7 +14,6 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jafa.AppTest;
-import com.jafa.domain.product.PdCategoryVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -23,7 +21,7 @@ import lombok.extern.log4j.Log4j;
 public class ProductControllerTest extends AppTest{
 
 	@Autowired
-	WebApplicationContext ctx;
+	WebApplicationContext ctx;	
 	
 	private MockMvc mockMvc;
 	
