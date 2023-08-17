@@ -13,14 +13,14 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class ExceptionAdvice {
 
-	// 일반적예외처리
-	@ExceptionHandler(Exception.class)
-	public String exception(Exception ex, Model model) {
-		log.error("...............EXCEPTION............" + ex.getMessage());
-		model.addAttribute("exception", ex);
-		log.error(model);
-		return "error_page";
-	}
+//	// 일반적예외처리
+//	@ExceptionHandler(Exception.class)
+//	public String exception(Exception ex, Model model) {
+//		log.error("...............EXCEPTION............" + ex.getMessage());
+//		model.addAttribute("exception", ex);
+//		log.error(model);
+//		return "error_page";
+//	}
 	
 	// 응답상태코드가 404오류일때의 예외처리
 	@ExceptionHandler(NoHandlerFoundException.class)

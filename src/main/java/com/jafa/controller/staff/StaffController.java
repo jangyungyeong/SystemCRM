@@ -112,9 +112,9 @@ public class StaffController {
 	}
 	
 	// 아이디 찾기 이메일 전송 
-	@PostMapping(value = "/findStaffInfo", produces = "plain/text; charset=utf-8")
+	@PostMapping(value = "/findStaffId", produces = "plain/text; charset=utf-8")
 	@ResponseBody
-	public ResponseEntity<String> findMemberId(String staffEmail){
+	public ResponseEntity<String> findStaffId(String staffEmail){
 		try {
 			mailSendService.findIdByEmail(staffEmail);			
 		} catch (NotFoundMemberException e) {

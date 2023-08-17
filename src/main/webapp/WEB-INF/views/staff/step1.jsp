@@ -2,4 +2,94 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../includes/header.jsp" %>
 
+<div class="container">
+
+	<div class="row my-5">
+		<div class="col-2">
+			<ul class="list-group">
+				<li class="list-group-item active">이용약관</li>
+				<li class="list-group-item">이메일 인증</li>
+				<li class="list-group-item">회원가입</li>
+			</ul>
+		</div><!-- end col-2 -->
+		<div class="col-10">
+			<form action="${ctxPath}/join/step2" method="post" id="termForm">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				<div class="form-group">
+					<h4>이용약관</h4>
+					<textarea rows="6" class="form-control my-2 bg-light border border-primary" readonly="readonly"></textarea>
+					<label class="mt-3">
+						<input type="checkbox" name="agreement">
+						<span>위의 이용약관에 동의합니다.</span>
+					</label>
+				</div>
+				<div class="form-group">
+					<h4>개인정보 수집 및 이용에 대한 안내</h4>
+					<textarea rows="6" class="form-control my-2 bg-light border border-primary" readonly="readonly"></textarea>
+					<label class="mt-3">
+						<input type="checkbox" name="agreement">
+						<span>위의 개인정보 수집 및 이용에 대한 안내에 동의합니다</span>
+					</label>
+				</div>
+				
+				<div class="border border-primary my-5 py-3 text-center">
+					<label>					
+						<input type="checkbox" class=checkAll>
+						<span>위의 이용약관과 개인정보 수집 및 이용에 대해 모두 동의합니다.</span>
+					</label>	
+				</div>
+					
+				<div class="my-3 text-center">
+					<a href="${ctxPath}/">
+						<button type="button" class="btn btn-outline-danger cancelBtn col-3">이전</button>
+					<a/>
+					<button type="button" class="btn btn-outline-primary nextBtn col-3">다음</button>
+				</div>
+			</form>
+		</div> <!-- col-10 end -->
+	</div><!-- end row -->
+
+</div><!-- end container -->
+
 <%@ include file="../includes/footer.jsp" %>
+
+<script>
+$(function(){
+	
+	let termForm = $('#termForm');
+	
+	$('.checkAll').change(function(){
+		if($(this).is(':checked')){
+			$('[name="agreement"]').prop('checked',true);
+		} else {
+			$('[name="agreement"]').prop('checked',false);
+		}
+	});
+	
+	$('.nextBtn').click(function(){
+		let checkFlag = [];
+		$('[name="agreement"]').each(function(index,element){
+			checkFlag.push($(element).is(':checked'));
+		});
+		
+		if(!checkFlag[0]){
+			alert('이용약관에 동의 해주세요');
+			return;
+		}
+		
+		if(!checkFlag[1]){
+			alert('개인정보 수집 및 이용에 대한 안내에 동의해주세요');
+			return;
+		}
+
+		termForm.submit();
+	});
+	
+	$('.cancelBtn').click(function(e){
+		let form = $('<form/>',{action : $(this).attr('href'), method : 'post'});
+		form.submit();
+	});
+	
+});
+	
+</script>

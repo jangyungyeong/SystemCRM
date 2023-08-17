@@ -34,13 +34,13 @@
 	</select>
 	
 	<insert id="insert">
-		insert into Staff_tbl(StaffId, StaffPwd, StaffName, StaffEmail, StaFirPhoneNum, StaMidPhoneNum, StaLastPhoneNum, StaffRank)
-		values(#{staffId}, #{staffPwd}, #{staffName},#{staffEmail},#{staFirPhoneNum},#{staMidPhoneNum},#{staLastPhoneNum},#{staffRank})
+		insert into Staff_tbl(StaffId, StaffPwd, StaffName, StaffEmail, StaFirPhoneNum, StaMidPhoneNum, StaLastPhoneNum)
+		values(#{staffId}, #{staffPwd}, #{staffName},#{staffEmail},#{staFirPhoneNum},#{staMidPhoneNum},#{staLastPhoneNum})
 	</insert>
 	
 	<update id="update">
 		update Staff_tbl set
-			StaffName = #{StaffName}, 
+			StaffName = #{staffName}, 
 			StaffEmail = #{staffEmail},
 			StaFirPhoneNum = #{staFirPhoneNum},
 			StaMidPhoneNum = #{staMidPhoneNum},
