@@ -170,4 +170,5 @@ public class StaffController {
 		rttr.addFlashAttribute("result", "modify");
 		return "redirect:/mypage";
 	}
+	
 }

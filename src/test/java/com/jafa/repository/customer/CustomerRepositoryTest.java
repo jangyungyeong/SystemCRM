@@ -19,7 +19,7 @@ public class CustomerRepositoryTest extends AppTest{
 	private CustomerRepository customerRepository;
 	
 	@Test
-	@Ignore
+//	@Ignore
 	public void test() {
 		Criteria criteria = new Criteria();
 		criteria.setPageNum(1);
@@ -84,7 +84,7 @@ public class CustomerRepositoryTest extends AppTest{
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void testSearch() {
 		Criteria criteria = new Criteria();
 		criteria.setType("S");

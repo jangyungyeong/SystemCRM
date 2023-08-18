@@ -66,7 +66,7 @@
     </sec:authorize>
     <sec:authorize access="isAuthenticated()">
 	    <li class="nav-item">
-	        <a class="nav-link" href="${ctxPath}/mypage">관리자</a>
+	        <a class="nav-link" href="${ctxPath}/mypage">마이페이지</a>
 	    </li>
 	    <li class="nav-item mr-2">
 	        <a class="nav-link logout" href="${ctxPath}/logout">로그아웃</a>

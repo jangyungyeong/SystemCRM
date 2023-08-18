@@ -10,6 +10,7 @@
 				</div>
 				<div class="card-body">
 					<form action="${ctxPath}/customer/register" method="post" class="registerForm">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				        <div class="input-group mb-3">
 				        	<div class="input-group-prepend">
 				          		<span class="input-group-text">회원이름</span>
@@ -57,7 +58,7 @@
 				          	<div class="input-group-prepend">
 				            	<span class="input-group-text">담당사원</span>
 				          	</div>
-				          	<input class="form-control" name="chargeStaff"/>
+				          	<input class="form-control" name="chargeStaff" value="${authInfo.staffId }" readonly="readonly"/>
 				      	</div>
 				      	<button class="btn btn-light" data-oper='register'>등록</button>
 						<button class="btn btn-info" data-oper='list'>취소</button>		

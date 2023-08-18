@@ -58,7 +58,7 @@ public class RootConfig {
 		SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
 		factory.setDataSource(dataSource());
 		factory.setMapperLocations(new PathMatchingResourcePatternResolver()
-				.getResources("classpath:mappers/**/**/*Mapper.xml"));
+				.getResources("classpath:mappers/**/*Mapper.xml"));
 		factory.setTypeAliasesPackage("com.jafa.domain");
 		return factory;
 	}

@@ -69,7 +69,9 @@
 			          	<input class="form-control" name="chargeStaff" value="${customer.chargeStaff}" readonly="readonly"/>
 			      	</div>
 			      	<div class="getBtns">
+			      		<sec:authorize access="isAuthenticated() and principal.username == #customer.chargeStaff or hasRole('ROLE_MANAGER')">
 						<button data-oper='modify' class="btn btn-light modify">수정</button>
+						</sec:authorize>
 						<button data-oper='list' class="btn btn-info list">목록</button>
 					</div>
 				</div> <!-- card-body -->

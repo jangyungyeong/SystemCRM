@@ -47,7 +47,7 @@ public class CustomerController {
 		String staffname = auth.getName();
 		if (!vo.getChargeStaff().equals(staffname) &&
 				!auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MANAGER"))) {
-			throw new AccessDeniedException("Access denided");
+			return "accessError";
 		}
 		model.addAttribute("customer", vo);
 		return "customer/modify";

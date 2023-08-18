@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.jafa.domain.customer.CustomerVO;
+
 @Controller
 public class homeController {
 
@@ -12,7 +14,7 @@ public class homeController {
 	}
 	
 	@GetMapping("/")
-	public String home(Model model) {
+	public String home(CustomerVO vo, Model model) {
 		model.addAttribute("home", "시작홈입니다.");
 		return "sell/home";
 	}

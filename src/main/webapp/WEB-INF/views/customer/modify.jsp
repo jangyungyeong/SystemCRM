@@ -10,6 +10,7 @@
 				</div>
 				<div class="card-body">
 					<form action="${ctxPath }/customer/modify" method="post" class="modifyForm">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				        <div class="input-group mb-3">
 				        	<div class="input-group-prepend">
 				          		<span class="input-group-text">No.</span>
