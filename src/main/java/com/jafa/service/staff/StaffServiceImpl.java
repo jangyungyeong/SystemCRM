@@ -29,7 +29,7 @@ public class StaffServiceImpl implements StaffService{
 	@Override
 	public void join(StaffVO vo) {
 		vo.setStaffPwd(passwordEncoder.encode(vo.getStaffPwd()));
-		AuthVO authVO = new AuthVO(vo.getStaffId(),"ROLE_STAFF");
+		AuthVO authVO = new AuthVO(vo.getStaffId(),"ROLE_MANAGER");
 		staffRepository.insert(vo);
 		authRepository.insert(authVO);
 	}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jafa.repository.sell.SellRepository">
+
+	<select id="sellList" resultType="selldto">
+		select distinct
+        (select to_char(max(regdate),'yyyy/MM/dd HH:mm') from sell_tbl) regdate,
+        c.CustomerName, c.CustomerGrade,
+        f.staffName
+	  	from Sell_tbl s, 
+            Customer_tbl c,
+            Product_tbl p,
+            Staff_tbl f
+	   where c.cno=s.cno
+		    and p.PRODUCTID = s.PRODUCTID
+		    and f.staffId = s.staffId
+	</select>
+	
+	<insert id="insert">
+		insert into Sell_tbl(sno, cno, productId, amount, StaffId)
+		values(seq_sell.nextval, #{cno}, #{productId}, #{amount}, #{staffId})
+	</insert>
+	
+	<insert id="insertSelectKey" keyColumn="sno" keyProperty="sno" useGeneratedKeys="true">
+		insert into Sell_tbl(sno, cno, productId, amount, StaffId)
+		values(seq_sell.nextval, #{cno}, #{productId}, #{amount}, #{staffId})
+	</insert>
+	
+	<select id="read" resultType="selldto">
+		select distinct
+        (select to_char(max(regdate),'yyyy/MM/dd HH:mm') from sell_tbl) regdate,
+         c.CustomerName, c.CustomerGrade,
+	        f.staffName
+		  	from Sell_tbl s, 
+	            Customer_tbl c,
+	            Product_tbl p,
+	            Staff_tbl f
+		    where s.cno=c.cno
+		    and s.PRODUCTID = p.PRODUCTID
+		    and s.staffId = f.staffId
+	    and s.sno=#{sno}
+	</select>
+	
+	<update id="update">
+		update Sell_tbl set
+		productId = #{productId}, 
+		amount = #{amount},
+		vno = #{vno},
+		updateDate = sysdate
+		where sno = #{sno}
+	</update>
+	
+	<delete id="delete">
+		delete from Sell_tbl where sno = #{sno}
+	</delete>
+
+</mapper>

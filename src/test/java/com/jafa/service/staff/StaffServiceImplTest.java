@@ -23,7 +23,7 @@ public class StaffServiceImplTest extends AppTest{
 	private AuthRepository authRepository;
 	
 	@Test
-	@Ignore
+//	@Ignore
 	public void testJoinManager() {
 		StaffVO vo = StaffVO.builder()
 				.staffId("jang")
@@ -33,25 +33,25 @@ public class StaffServiceImplTest extends AppTest{
 				.staFirPhoneNum("010")
 				.staMidPhoneNum("4907")
 				.staLastPhoneNum("6646")
-				.staffRank("매니져")
+				.staffRank("매니저")
 				.build();
 		staffService.join(vo);
 		
-		AuthVO authVO = new AuthVO("jang","ROLE_MANAGER");
-		authRepository.insert(authVO);
+//		AuthVO authVO = new AuthVO("jang","ROLE_MANAGER");
+//		authRepository.insert(authVO);
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void testJoinStaff() {
 		StaffVO vo = StaffVO.builder()
-				.staffId("gang")
+				.staffId("wang")
 				.staffPwd("1234")
-				.staffName("강동원")
-				.staffEmail("gang@test.com")
+				.staffName("왕나경")
+				.staffEmail("wang@test.com")
 				.staFirPhoneNum("010")
-				.staMidPhoneNum("1232")
-				.staLastPhoneNum("1456")
+				.staMidPhoneNum("8975")
+				.staLastPhoneNum("2425")
 				.staffRank("사원")
 				.build();
 		staffService.join(vo);

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jafa.AppTest;
 import com.jafa.domain.customer.CustomerVO;
-import com.jafa.repository.customer.CustomerRepository;
 
 public class DataInsert extends AppTest{
 
