@@ -39,24 +39,22 @@ public class SellRepositoryTest extends AppTest{
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void testInsertSelectKey() {
 		SellVO vo = SellVO.builder()
-				.cno(2L)
+				.cno(1L)
 				.productId(12L)
 				.amount(2)
-				.staffId("wang")
+				.staffId("jang")
 				.build();
 		sellRepository.insert(vo);
 		log.info(vo);
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void testRead() {
-		SellVO vo = new SellVO();
-		vo.setSno(8L);
-		SellDTO read = sellRepository.read(vo);
+		SellDTO read = sellRepository.read(1L);
 		log.info(read);
 	}
 	
@@ -64,8 +62,8 @@ public class SellRepositoryTest extends AppTest{
 	@Ignore
 	public void testUpdate() {
 		SellVO vo = SellVO.builder()
-				.sno(9L)
-				.productId(13L)
+				.sno(5L)
+				.productId(15L)
 				.amount(3)
 				.build();
 		int count = sellRepository.update(vo);
@@ -75,7 +73,7 @@ public class SellRepositoryTest extends AppTest{
 	@Test
 	@Ignore
 	public void testDelete() {
-		int count = sellRepository.delete(11L);
+		int count = sellRepository.delete(7L);
 		log.info(count);
 	}
 

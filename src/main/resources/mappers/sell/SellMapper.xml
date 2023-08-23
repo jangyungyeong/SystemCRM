@@ -7,7 +7,7 @@
 	<select id="sellList" resultType="selldto">
 		select distinct
         (select to_char(max(regdate),'yyyy/MM/dd HH:mm') from sell_tbl) regdate,
-        c.CustomerName, c.CustomerGrade,
+        c.cno, c.CustomerName, c.CustomerGrade,
         f.staffName
 	  	from Sell_tbl s, 
             Customer_tbl c,
@@ -31,7 +31,7 @@
 	<select id="read" resultType="selldto">
 		select distinct
         (select to_char(max(regdate),'yyyy/MM/dd HH:mm') from sell_tbl) regdate,
-         c.CustomerName, c.CustomerGrade,
+         c.cno, c.CustomerName, c.CustomerGrade,
 	        f.staffName
 		  	from Sell_tbl s, 
 	            Customer_tbl c,
@@ -40,20 +40,19 @@
 		    where s.cno=c.cno
 		    and s.PRODUCTID = p.PRODUCTID
 		    and s.staffId = f.staffId
-	    and s.sno=#{sno}
+	    and s.cno=#{cno}
 	</select>
 	
 	<update id="update">
 		update Sell_tbl set
 		productId = #{productId}, 
 		amount = #{amount},
-		vno = #{vno},
 		updateDate = sysdate
-		where sno = #{sno}
+		where cno = #{cno}
 	</update>
 	
 	<delete id="delete">
-		delete from Sell_tbl where sno = #{sno}
+		delete from Sell_tbl where cno = #{cno}
 	</delete>
 
 </mapper>

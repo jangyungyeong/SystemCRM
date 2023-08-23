@@ -19,12 +19,12 @@ public interface SellRepository {
 	Integer insertSelectKey(SellVO vo);
 	
 	// 판매 조회
-	SellDTO read(SellVO vo);
+	SellDTO read(Long cno);
 	
 	// 수정된 행의 개수
 	int update(SellVO vo);
 	
 	// 삭제된 행의 개수
-	int delete(Long sno);
+	int delete(Long cno);
 	
 }
