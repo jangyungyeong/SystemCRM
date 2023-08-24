@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jafa.AppTest;
+import com.jafa.domain.Criteria;
 import com.jafa.domain.sell.SellDTO;
 import com.jafa.domain.sell.SellVO;
 
@@ -21,7 +22,8 @@ public class SellServiceImplTest extends AppTest{
 	@Test
 	@Ignore
 	public void testList() {
-		sellService.SellList().forEach(s->log.info(s));
+		Criteria criteria = new Criteria();
+		sellService.SellList(criteria).forEach(s->log.info(s));
 	}
 	
 	@Test
@@ -60,4 +62,10 @@ public class SellServiceImplTest extends AppTest{
 		sellService.remove(9L);
 	}
 
+	@Test
+	@Ignore
+	public void testTotalCount() {
+		int totalCount = sellService.totalCount(new Criteria());
+		log.info(totalCount);
+	}
 }

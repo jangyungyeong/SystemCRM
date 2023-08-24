@@ -75,7 +75,7 @@ public class CustomerController {
 		return "redirect:/customer/list";
 	}
 	
-	@PreAuthorize("isAuthenticated() and principal.username==#vo.chargeStaff or hasRole('ROLE_MANAGER')")
+	@PreAuthorize("isAuthenticated() and principal.username==#chargeStaff or hasRole('ROLE_MANAGER')")
 	@PostMapping("/remove")
 	public String remove(Long cno, RedirectAttributes rttr, Criteria criteria) {
 		if (customerService.remove(cno)) {

@@ -58,7 +58,7 @@
 				          	<div class="input-group-prepend">
 				            	<span class="input-group-text">담당사원</span>
 				          	</div>
-				          	<input class="form-control" name="chargeStaff" value="${authInfo.staffId }" readonly="readonly"/>
+				          	<input class="form-control" name="chargeStaff" value="${authInfo.staffName }" readonly="readonly"/>
 				      	</div>
 				      	<button class="btn btn-light" data-oper='register'>등록</button>
 						<button class="btn btn-info" data-oper='list'>취소</button>		

@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jafa.AppTest;
+import com.jafa.domain.Criteria;
 import com.jafa.domain.sell.SellDTO;
 import com.jafa.domain.sell.SellVO;
 
@@ -21,7 +22,9 @@ public class SellRepositoryTest extends AppTest{
 	@Test
 	@Ignore
 	public void testList() {
-		List<SellDTO> list = sellRepository.sellList();
+		Criteria criteria = new Criteria();
+		criteria.setPageNum(1);
+		List<SellDTO> list = sellRepository.sellList(criteria);
 		list.forEach(s->log.info(s));
 	}
 	
@@ -77,4 +80,9 @@ public class SellRepositoryTest extends AppTest{
 		log.info(count);
 	}
 
+	@Test
+	@Ignore
+	public void testGetTotalCount() {
+		log.info(sellRepository.getTotalCount(new Criteria()));
+	}
 }

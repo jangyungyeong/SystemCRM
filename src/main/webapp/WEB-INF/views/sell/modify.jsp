@@ -10,6 +10,7 @@
 				</div>
 				<div class="card-body">
 					<form action="${ctxPath }/sell/modify" method="post" class="modifyForm">
+			        					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			        <div class="input-group mb-3">
 			        	<div class="input-group-prepend">
 			          		<span class="input-group-text">No.</span>
@@ -20,14 +21,13 @@
 			        	<div class="input-group-prepend">
 			          		<span class="input-group-text">최근구매날짜</span>
 			        	</div>
-			         	<input class="form-control" name="updateDate" value="${sell.updateDate}" readonly="readonly">
+			         	<input class="form-control" name="regDate" value="${sell.regDate}" readonly="readonly">
 			      	</div>
 				    <div class="input-group mb-3">
 				    	<div class="input-group-prepend">
 				          <span class="input-group-text">회원이름</span>
 				        </div>
 				        <input class="form-control" name="customerName" value="${sell.customerName}" readonly="readonly"/>
-				    	<button id="regBtn" class="btn btn-xs btn-primary">회원정보</button>
 				    </div>
 			      	<div class="input-group mb-3">
 			          	<div class="input-group-prepend">
@@ -73,3 +73,33 @@
 	</div>
 </div>
 <%@ include file="../includes/footer.jsp" %>
+
+<script>
+$(function(){
+	let formObj = $('.modifyForm')
+	let addCriteria = function(){
+		formObj.append($('<input/>',{type : 'hidden', name : 'pageNum', value : '${criteria.pageNum}'}))
+		   .append($('<input/>',{type : 'hidden', name : 'amount', value : '${criteria.amount}'}))
+		if(type&&keyword){
+			formObj.append($('<input/>',{type : 'hidden', name : 'type', value : '${criteria.type}'}))
+				.append($('<input/>',{type : 'hidden', name : 'keyword', value : '${criteria.keyword}'}))
+		}
+	}
+	let type = '${criteria.type}'
+	let keyword = '${criteria.keyword}'
+		
+	$('.modifyForm button').click(function(){
+		let operation =$(this).data('oper')
+		addCriteria();
+		if(operation=='remove'){
+			formObj.attr('action','${ctxPath}/sell/remove');
+		} else if (operation=='list'){
+			formObj.empty();
+			addCriteria();
+			formObj.attr('action','${ctxPath}/')
+				   .attr('method','get');
+		} 		
+		formObj.submit();
+	});	
+})
+</script>

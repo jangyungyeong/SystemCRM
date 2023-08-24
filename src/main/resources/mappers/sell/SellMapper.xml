@@ -4,18 +4,38 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jafa.repository.sell.SellRepository">
 
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<trim prefix="OR">
+				<choose>
+	    			<when test="type=='C'.toString()">
+	    				CustomerName like '%'||#{keyword}||'%'
+	    			</when>
+	    			<when test="type=='S'.toString()">
+	    				staffName like '%'||#{keyword}||'%'
+	    			</when>
+	    		</choose>
+			</trim>
+		</trim>
+  	</sql>
+
 	<select id="sellList" resultType="selldto">
-		select distinct
-        (select to_char(max(regdate),'yyyy/MM/dd HH:mm') from sell_tbl) regdate,
-        c.cno, c.CustomerName, c.CustomerGrade,
-        f.staffName
-	  	from Sell_tbl s, 
-            Customer_tbl c,
-            Product_tbl p,
-            Staff_tbl f
-	   where c.cno=s.cno
-		    and p.PRODUCTID = s.PRODUCTID
-		    and f.staffId = s.staffId
+		<![CDATA[
+		select * from
+    		(select /*+INDEX_DESC(Sell_tbl pk_sell)*/
+    		rownum as rn, 
+    		(select to_char(max(regdate),'yyyy/MM/dd HH:mm') from sell_tbl) regdate,
+    		cno,
+    		CustomerName, 
+    		CustomerGrade,
+    		staffName
+		from sell_view where
+		]]>
+		<include refid="criteria"/>
+		<![CDATA[
+			rownum <= #{maxRow})
+    		where rn > #{minRow}
+    	]]>
 	</select>
 	
 	<insert id="insert">
@@ -30,7 +50,7 @@
 	
 	<select id="read" resultType="selldto">
 		select distinct
-        (select to_char(max(regdate),'yyyy/MM/dd HH:mm') from sell_tbl) regdate,
+        (select to_char(max(regDate),'yyyy/MM/dd HH:mm') from sell_tbl) regDate,
          c.cno, c.CustomerName, c.CustomerGrade,
 	        f.staffName
 		  	from Sell_tbl s, 
@@ -54,5 +74,12 @@
 	<delete id="delete">
 		delete from Sell_tbl where cno = #{cno}
 	</delete>
-
+	
+	<select id="getTotalCount" resultType="int">
+		<trim suffixOverrides="WHERE|AND">
+    	select count(cno) from sell_view where
+    		<include refid="criteria"/>
+    		cno > 0
+		</trim>
+    </select>
 </mapper>

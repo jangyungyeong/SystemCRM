@@ -4,13 +4,14 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.jafa.domain.Criteria;
 import com.jafa.domain.sell.SellDTO;
 import com.jafa.domain.sell.SellVO;
 
 public interface SellRepository {
 
 	// 판매목록
-	List<SellDTO> sellList();
+	List<SellDTO> sellList(Criteria criteria);
 	
 	// 판매등록
 	void insert(SellVO vo);
@@ -26,5 +27,8 @@ public interface SellRepository {
 	
 	// 삭제된 행의 개수
 	int delete(Long cno);
+	
+	// 전체 판매내역 수
+	int getTotalCount(Criteria criteria);
 	
 }

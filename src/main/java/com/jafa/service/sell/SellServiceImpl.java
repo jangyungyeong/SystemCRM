@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.jafa.domain.Criteria;
 import com.jafa.domain.sell.SellDTO;
 import com.jafa.domain.sell.SellVO;
 import com.jafa.repository.sell.SellRepository;
@@ -19,8 +20,8 @@ public class SellServiceImpl implements SellService{
 	private final SellRepository sellRepository;
 	
 	@Override
-	public List<SellDTO> SellList() {
-		return sellRepository.sellList();
+	public List<SellDTO> SellList(Criteria criteria) {
+		return sellRepository.sellList(criteria);
 	}
 
 	@Override
@@ -41,6 +42,11 @@ public class SellServiceImpl implements SellService{
 	@Override
 	public boolean remove(Long cno) {
 		return sellRepository.delete(cno) == 1;
+	}
+
+	@Override
+	public int totalCount(Criteria criteria) {
+		return sellRepository.getTotalCount(criteria);
 	}
 
 

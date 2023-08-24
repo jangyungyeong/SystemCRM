@@ -13,8 +13,7 @@ import lombok.ToString;
 @ToString
 @Alias("selldto")
 public class SellDTO {
-	private String regdate; // 판매등록일
-	private String updateDate; // 판매수정일
+	private String regDate; // 판매등록일
 	private int amount; // 제품판매수량
 	private Long cno; // 고객번호
 	private String customerName; // 구매고객
