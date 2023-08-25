@@ -20,4 +20,5 @@ public class SellDTO {
 	private String customerGrade; // 구매고객의 등급
 	private String productName; // 제품명
 	private String staffName; // 판매직원
+	private String staffId;
 }

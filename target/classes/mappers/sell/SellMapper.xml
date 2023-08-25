@@ -52,7 +52,7 @@
 		select distinct
         (select to_char(max(regDate),'yyyy/MM/dd HH:mm') from sell_tbl) regDate,
          c.cno, c.CustomerName, c.CustomerGrade,
-	        f.staffName
+	        f.staffName,f.staffId
 		  	from Sell_tbl s, 
 	            Customer_tbl c,
 	            Product_tbl p,
@@ -81,5 +81,34 @@
     		<include refid="criteria"/>
     		cno > 0
 		</trim>
+    </select>
+    
+    <select id="productList" resultType="sellprod">
+		select
+		    p.productName,
+		    p.productNumber,
+		    s.amount,
+		    p.price, 
+		    s.amount*p.price as total
+		from sell_tbl s, 
+		    Product_tbl p, 
+		    CUSTOMER_TBL c
+		where s.cno = c.cno 
+		    and s.productId = p.productId 
+		    and s.cno = #{cno}
+		union 
+		select
+		    'total',
+		    '품번',
+		    0,
+		    0,
+		    sum(s.amount*p.price)
+		from sell_tbl s, 
+		    Product_tbl p, 
+		    CUSTOMER_TBL c
+		where s.cno = c.cno 
+		    and s.productId = p.productId 
+		    and s.cno = #{cno}
+		order by amount desc
     </select>
 </mapper>

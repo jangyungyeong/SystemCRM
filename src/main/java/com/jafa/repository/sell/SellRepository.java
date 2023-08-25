@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.jafa.domain.Criteria;
 import com.jafa.domain.sell.SellDTO;
+import com.jafa.domain.sell.SellProduct;
 import com.jafa.domain.sell.SellVO;
 
 public interface SellRepository {
@@ -30,5 +31,8 @@ public interface SellRepository {
 	
 	// 전체 판매내역 수
 	int getTotalCount(Criteria criteria);
+	
+	// 회원이 구매한 품목 목록
+	List<SellProduct> productList(Long cno);
 	
 }

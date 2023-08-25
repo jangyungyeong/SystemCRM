@@ -19,7 +19,6 @@ public class AdviceRepositoryTest extends AppTest{
 	@Ignore
 	public void testInsert() {
 		AdviceVO vo = AdviceVO.builder()
-				.sno(2L)
 				.content("상담내용등록테스트")
 				.cno(1L)
 				.staffId("jang")

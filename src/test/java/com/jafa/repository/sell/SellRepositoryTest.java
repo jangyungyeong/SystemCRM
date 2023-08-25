@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.jafa.AppTest;
 import com.jafa.domain.Criteria;
 import com.jafa.domain.sell.SellDTO;
+import com.jafa.domain.sell.SellProduct;
 import com.jafa.domain.sell.SellVO;
 
 import lombok.extern.log4j.Log4j;
@@ -84,5 +85,12 @@ public class SellRepositoryTest extends AppTest{
 	@Ignore
 	public void testGetTotalCount() {
 		log.info(sellRepository.getTotalCount(new Criteria()));
+	}
+	
+	@Test
+	@Ignore
+	public void testProductlist() {
+		List<SellProduct> prodList = sellRepository.productList(1L);
+		prodList.forEach(p->log.info(p));
 	}
 }

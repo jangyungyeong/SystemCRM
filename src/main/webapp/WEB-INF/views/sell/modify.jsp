@@ -10,7 +10,7 @@
 				</div>
 				<div class="card-body">
 					<form action="${ctxPath }/sell/modify" method="post" class="modifyForm">
-			        					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+   					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			        <div class="input-group mb-3">
 			        	<div class="input-group-prepend">
 			          		<span class="input-group-text">No.</span>
@@ -93,13 +93,15 @@ $(function(){
 		addCriteria();
 		if(operation=='remove'){
 			formObj.attr('action','${ctxPath}/sell/remove');
+			formObj.submit();
 		} else if (operation=='list'){
 			formObj.empty();
 			addCriteria();
 			formObj.attr('action','${ctxPath}/')
 				   .attr('method','get');
+			formObj.submit();
 		} 		
-		formObj.submit();
+		
 	});	
 })
 </script>

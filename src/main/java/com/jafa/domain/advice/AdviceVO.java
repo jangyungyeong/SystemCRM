@@ -20,7 +20,7 @@ import lombok.ToString;
 @Alias("advice")
 public class AdviceVO {
 	private Long vno; // 상담번호
-	private Long sno; // 판매번호
+	private Long sno; // 판매번호 
 	private Long cno; // 고객번호
 	private String staffId; // 직원아이디
 	private String content; // 상담내용

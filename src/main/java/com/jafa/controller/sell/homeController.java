@@ -15,8 +15,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jafa.domain.Criteria;
 import com.jafa.domain.Pagination;
+import com.jafa.domain.advice.AdviceVO;
 import com.jafa.domain.sell.SellDTO;
 import com.jafa.domain.sell.SellVO;
+import com.jafa.repository.advice.AdviceRepository;
 import com.jafa.service.customer.CustomerService;
 import com.jafa.service.sell.SellService;
 
@@ -25,6 +27,12 @@ public class homeController {
 
 	@Autowired
 	SellService sellService;
+	
+	@Autowired
+	CustomerService customerService;
+	
+	@Autowired
+	AdviceRepository adviceRepository;
 	
 	public homeController() {
 		System.out.println("HomeController가 생성되었습니다.");
@@ -40,6 +48,9 @@ public class homeController {
 	@GetMapping("/sell/get")
 	public void get(Long cno, Model model, Criteria criteria) {
 		model.addAttribute("sell", sellService.get(cno));
+		model.addAttribute("product", sellService.ProductList(cno));
+		model.addAttribute("customer", customerService.get(cno));
+		model.addAttribute("advice", adviceRepository.read(cno));
 	}
 	
 	@PreAuthorize("isAuthenticated()")
@@ -47,7 +58,7 @@ public class homeController {
 	public String modify(Long cno, Model model, Criteria criteria, Authentication auth) throws AccessDeniedException{
 		SellDTO vo = sellService.get(cno);
 		String staffname = auth.getName();
-		if (!vo.getStaffName().equals(staffname) && !auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MANAGER"))) {
+		if (!vo.getStaffId().equals(staffname) && !auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MANAGER"))) {
 			return "accessError";
 		}
 		model.addAttribute("sell", vo);
@@ -77,9 +88,9 @@ public class homeController {
 		return "redirect:/";
 	}
 	
-	@PreAuthorize("isAuthenticated() and principal.username==#staffName or hasRole('ROLE_MANAGER')")
+	@PreAuthorize("isAuthenticated() and principal.username==#staffId or hasRole('ROLE_MANAGER')")
 	@PostMapping("/sell/remove")
-	public String remove(Long cno, RedirectAttributes rttr, Criteria criteria) {
+	public String remove(Long cno, RedirectAttributes rttr, Criteria criteria, String staffName) {
 		if (sellService.remove(cno)) {
 			rttr.addFlashAttribute("result", cno);
 			rttr.addFlashAttribute("operation", "remove");

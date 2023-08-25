@@ -27,6 +27,6 @@ public class SellVO {
 	private int amount; // 제품수량
 	private String staffId; // 직원아이디
 	
-	private LocalDateTime regDate; // 판매등록일
-	private LocalDateTime updateDate; // 판매수정일
+	private String regDate; // 판매등록일
+	private String updateDate; // 판매수정일
 }

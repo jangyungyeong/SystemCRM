@@ -77,7 +77,7 @@ public class CustomerController {
 	
 	@PreAuthorize("isAuthenticated() and principal.username==#chargeStaff or hasRole('ROLE_MANAGER')")
 	@PostMapping("/remove")
-	public String remove(Long cno, RedirectAttributes rttr, Criteria criteria) {
+	public String remove(Long cno, RedirectAttributes rttr, Criteria criteria, String chargeStaff) {
 		if (customerService.remove(cno)) {
 			rttr.addFlashAttribute("result", cno);
 			rttr.addFlashAttribute("operation", "remove");

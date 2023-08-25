@@ -5,6 +5,7 @@
 <%@ taglib prefix="tf" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:set var="ctxPath" value="${pageContext.request.contextPath}"/>
 <sec:authorize access="isAuthenticated()">

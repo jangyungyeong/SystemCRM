@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.jafa.domain.Criteria;
 import com.jafa.domain.sell.SellDTO;
+import com.jafa.domain.sell.SellProduct;
 import com.jafa.domain.sell.SellVO;
 import com.jafa.repository.sell.SellRepository;
 
@@ -47,6 +48,11 @@ public class SellServiceImpl implements SellService{
 	@Override
 	public int totalCount(Criteria criteria) {
 		return sellRepository.getTotalCount(criteria);
+	}
+
+	@Override
+	public List<SellProduct> ProductList(Long cno) {
+		return sellRepository.productList(cno);
 	}
 
 

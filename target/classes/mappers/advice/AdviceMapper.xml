@@ -10,7 +10,7 @@
 	</insert>
 	
 	<select id="read" resultType="advice">
-		select a.content content
+		select a.content
 	  		from advice_tbl a, Sell_tbl s
 			where s.sno = a.sno and
         a.vno = #{vno}

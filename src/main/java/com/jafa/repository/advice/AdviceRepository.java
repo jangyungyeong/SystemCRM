@@ -10,7 +10,7 @@ public interface AdviceRepository {
 	void insert(AdviceVO vo);
 	
 	// 상담조회
-	AdviceVO read(Long vno);
+	AdviceVO read(Long cno);
 	
 	// 상담수정
 	void update(AdviceVO vo);
