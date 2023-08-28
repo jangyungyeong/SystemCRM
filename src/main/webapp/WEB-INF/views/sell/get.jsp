@@ -54,7 +54,7 @@
 			      			</c:if>
 			      		</c:forEach>
 			      	</div>
-			      	<div class="input-group mb-3">
+			      	<div class="input-group mb-3 adviceContent">
 			          	<div class="input-group-prepend">
 			            	<span class="input-group-text">상담내용</span>
 			          	</div>
@@ -179,15 +179,45 @@
             <div class="modal-body">
 				<div class="card">
 					<div class="card-body">
-						${advice.content }
+                        <div id="prevContent">${advice.content}</div> 
+                        <button type="button" class="btn btn-danger float-right ml-2" id="dropAdviceButton">삭제</button>
+                        <button type="button" class="btn btn-info float-right" id="editAdviceButton">수정</button>
 					</div>
 				</div>                
             </div>
         </div>
     </div>
 </div>
+<!-- 상담수정 모달 -->
+<div class="modal fade" id="adviceEditModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4>상담 수정</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- 수정할 상담 내용을 입력할 폼 -->
+                        <form id="editAdviceForm">
+                            <textarea id="editedContent" cols="50">${advice.content}</textarea>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" id="saveEditedContent">저장</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
+
 $(function(){
 	// 회원정보 모달
 	$('.customInfo').click(function(){
@@ -197,11 +227,66 @@ $(function(){
 	$('.sellRead').click(function(){
 		$('#sellReadModal').modal('show');
 	})
+	
 	// 상담조회 모달
 	$('.adviceRead').click(function(){
 		$('#adviceReadModal').modal('show');
 	})
 	
+    // 수정 버튼을 클릭하면 상담 수정 모달을 띄우는 함수
+    $("#editAdviceButton").click(function () {
+        // 상담 조회 모달을 닫습니다.
+        $("#adviceReadModal").modal("hide");
+        // 상담 수정 모달을 띄웁니다.
+        $("#adviceEditModal").modal("show");
+    });
+
+    // 수정된 상담 내용을 저장
+    $("#saveEditedContent").click(function () {
+        var editedContent = $("#editedContent").val();
+        let cno = $('[name="cno"]').val();
+        
+        $.ajax({
+            url: "${ctxPath}/sell/advice/"+cno,
+            type: "POST",
+            data: {
+                editedContent: editedContent
+            },
+            success: function (message) {
+                // 성공적인 응답을 받았을 때의 처리
+                console.log(message);
+                $("#adviceEditModal").modal("hide");
+                $("#prevContent").text(editedContent);
+                $('.adviceContent').find('[name="advice"]').val(editedContent);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+        
+    });
+    
+    // 상담내용 삭제
+    $("#dropAdviceButton").click(function () {
+        let cno = $('[name="cno"]').val();
+        
+        $.ajax({
+            url: "${ctxPath}/sell/advice/"+cno,
+            type: "delete",
+            success: function (message) {
+                // 성공적인 응답을 받았을 때의 처리
+                console.log(message);
+                $("#adviceReadModal").modal("hide");
+                $("#prevContent").text("상담이력이 없습니다.");
+                $('.adviceContent').find('[name="advice"]').val("상담이력이 없습니다.");
+                $('#adviceReadModal').find('.button').hide();
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+        
+    });
 	
 	// 목록 or 수정 페이지로
 	let form = $('form')
@@ -230,4 +315,5 @@ $(function(){
 		form.submit();
 	});
 })
+
 </script>

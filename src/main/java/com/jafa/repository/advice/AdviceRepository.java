@@ -16,6 +16,6 @@ public interface AdviceRepository {
 	void update(AdviceVO vo);
 	
 	// 상담삭제
-	void delete(Long vno);
+	void delete(Long cno);
 	
 }

@@ -10,19 +10,19 @@
 	</insert>
 	
 	<select id="read" resultType="advice">
-		select a.content
+		select a.cno, a.content
 	  		from advice_tbl a, Sell_tbl s
 			where s.sno = a.sno and
-        a.vno = #{vno}
+        a.cno = #{cno}
 	</select>
 	
 	<update id="update">
 		update advice_tbl set
 			content = #{content}
-		where vno = #{vno}
+			where cno = #{cno}
 	</update>
 	
 	<delete id="delete">
-		delete from advice_tbl where vno = #{vno}
+		delete from advice_tbl where cno = #{cno}
 	</delete>
 </mapper>

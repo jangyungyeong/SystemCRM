@@ -1,16 +1,20 @@
 package com.jafa.controller.sell;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jafa.domain.Criteria;
@@ -22,7 +26,10 @@ import com.jafa.repository.advice.AdviceRepository;
 import com.jafa.service.customer.CustomerService;
 import com.jafa.service.sell.SellService;
 
+import lombok.extern.log4j.Log4j;
+
 @Controller
+@Log4j
 public class homeController {
 
 	@Autowired
@@ -97,5 +104,51 @@ public class homeController {
 		}
 		return "redirect:/"+criteria.getListLink();
 	}
+	
+	
+	@PostMapping(value="/sell/advice/{cno}", produces = "plain/text;charset=utf-8" )
+	@ResponseBody
+	public ResponseEntity<String> updateAdvice(@PathVariable Long cno, String editedContent){
+		log.info(cno);
+		log.info(editedContent);
+		
+		try {
+            AdviceVO advice = adviceRepository.read(cno);
+            log.info(advice);
+            if (advice == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            advice.setContent(editedContent);
+            adviceRepository.update(advice);
+
+            return ResponseEntity.ok("상담이 성공적으로 수정되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류가 발생했습니다.");
+        }
+	}
+	
+	@DeleteMapping(value="/sell/advice/{cno}", produces = "plain/text;charset=utf-8" )
+	@ResponseBody
+	public ResponseEntity<String> dropAdvice(@PathVariable Long cno){
+		log.info(cno);
+		
+		try {
+			AdviceVO advice = adviceRepository.read(cno);
+			log.info(advice);
+			if (advice == null) {
+				return ResponseEntity.notFound().build();
+			}
+			
+			adviceRepository.delete(cno);
+			
+			return ResponseEntity.ok("상담이 성공적으로 삭제되었습니다.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류가 발생했습니다.");
+		}
+	}
+	
 		
 }
