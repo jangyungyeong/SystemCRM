@@ -1,4 +1,4 @@
-package com.jafa.domain.product;
+package com.jafa.domain.sell;
 
 import org.apache.ibatis.type.Alias;
 

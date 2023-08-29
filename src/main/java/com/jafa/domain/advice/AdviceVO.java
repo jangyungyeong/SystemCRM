@@ -2,7 +2,7 @@ package com.jafa.domain.advice;
 
 import org.apache.ibatis.type.Alias;
 
-import com.jafa.domain.product.ProductVO;
+import com.jafa.domain.sell.ProductVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

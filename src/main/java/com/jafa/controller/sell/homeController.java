@@ -1,5 +1,11 @@
 package com.jafa.controller.sell;
 
+import java.net.URI;
+import java.util.List;
+
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.jafa.domain.Criteria;
 import com.jafa.domain.Pagination;
 import com.jafa.domain.advice.AdviceVO;
+import com.jafa.domain.sell.PdCategoryDTO;
 import com.jafa.domain.sell.SellDTO;
 import com.jafa.domain.sell.SellVO;
 import com.jafa.repository.advice.AdviceRepository;
@@ -58,7 +65,14 @@ public class homeController {
 		model.addAttribute("product", sellService.ProductList(cno));
 		model.addAttribute("customer", customerService.get(cno));
 		model.addAttribute("advice", adviceRepository.read(cno));
+		
+		sellService.getPdcategoryList().forEach(c-> log.info(c));
+		model.addAttribute("pdCategory", sellService.getPdcategoryList());
+		sellService.getPdList().forEach(d-> log.info(d));
+		model.addAttribute("productList", sellService.getPdList());
+		
 	}
+	
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/sell/modify")
@@ -105,8 +119,14 @@ public class homeController {
 		return "redirect:/"+criteria.getListLink();
 	}
 	
+	// 하위 카테고리 요청
+	@GetMapping("/product/childCategory/{parentCategoryId}") 
+	@ResponseBody
+	public List<PdCategoryDTO> childCategory(@PathVariable Long parentCategoryId){
+		return sellService.getPdcategoryList();
+	}
 	
-	@PostMapping(value="/sell/advice/{cno}", produces = "plain/text;charset=utf-8" )
+	@PostMapping(value="/update/advice/{cno}", produces = "plain/text;charset=utf-8" )
 	@ResponseBody
 	public ResponseEntity<String> updateAdvice(@PathVariable Long cno, String editedContent){
 		log.info(cno);
@@ -121,7 +141,7 @@ public class homeController {
 
             advice.setContent(editedContent);
             adviceRepository.update(advice);
-
+            
             return ResponseEntity.ok("상담이 성공적으로 수정되었습니다.");
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,19 +149,24 @@ public class homeController {
         }
 	}
 	
-	@DeleteMapping(value="/sell/advice/{cno}", produces = "plain/text;charset=utf-8" )
+	@DeleteMapping(value="/remove/advice/{cno}", produces = "plain/text;charset=utf-8" )
 	@ResponseBody
-	public ResponseEntity<String> dropAdvice(@PathVariable Long cno){
+	public ResponseEntity<String> dropAdvice(@PathVariable Long cno, HttpSession session){
 		log.info(cno);
 		
 		try {
 			AdviceVO advice = adviceRepository.read(cno);
 			log.info(advice);
 			if (advice == null) {
-				return ResponseEntity.notFound().build();
+				log.info("다시 등록");
+				return ResponseEntity.status(HttpStatus.SEE_OTHER)
+						.location(URI.create("/update/advice/{cno}")).build();
 			}
 			
 			adviceRepository.delete(cno);
+			
+		  // 세션 상담삭제상태 유지
+          session.setAttribute("adviceDelete", true);
 			
 			return ResponseEntity.ok("상담이 성공적으로 삭제되었습니다.");
 		} catch (Exception e) {
@@ -149,6 +174,5 @@ public class homeController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("내부 서버 오류가 발생했습니다.");
 		}
 	}
-	
 		
 }

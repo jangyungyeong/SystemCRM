@@ -77,7 +77,40 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 임시 -->
+	<select class="parentCategory">
+		<option value="">1차분류</option>
+		<c:forEach items="${pdCategory}" var="pc">
+			<c:if test="${pc.level==1}">
+				<option value="${pc.categoryId}">${pc.categoryName}</option>
+			</c:if>
+		</c:forEach>
+	</select>
+	<select class="childCategory">
+		<option value="">2차분류</option>
+		<c:forEach items="${pdCategory}" var="pc">
+			<c:if test="${pc.level==2}">
+				<option value="${pc.categoryId}">${pc.categoryName}</option>
+			</c:if>
+		</c:forEach>
+	</select>
+	<select class="product">
+		<option value="">상품명</option>
+		<c:forEach items="${productList}" var="pd">
+				<option value="${pd.categoryId}">${pd.productName}</option>
+		</c:forEach>
+	</select>
+	<select class="productNum">
+		<option value="">품번</option>
+		<c:forEach items="${productList}" var="pd">
+				<option value="${pd.categoryId}">${pd.productNumber}</option>
+		</c:forEach>
+	</select>
 </div>
+
+
+
 
 <form>
 	<input type="hidden" name="cno" id="cno" value="${sell.cno}">	
@@ -163,6 +196,60 @@
                 	</tbody>
                 </table>
             </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info float-right" id="editSellButton">수정</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 구매수정 모달 -->
+<div class="modal fade" id="sellEditModal">
+	<div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+            	<h4>구매 변경</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table table-striped table-bordered table-hover">
+                	<thead class="thead-light">
+                		<tr>
+                			<th>상품명</th>
+                			<th>품번</th>
+                			<th>수량</th>
+                			<th>단가</th>
+                			<th>합계</th>
+                		</tr>
+                	</thead>
+                	<tbody>
+               			<c:forEach items="${product}" var="prod">
+               				<c:if test="${prod.productName!='total'}">
+	                		<tr>
+	                			<td>${prod.productName}</td>
+	                			<td>${prod.productNumber}</td>
+	                			<td>${prod.amount }</td>
+	                			<td>${prod.price }</td>
+	                			<td>${prod.total}</td>
+	                		<tr>
+	                		</c:if> 
+	                		<c:if test="${prod.productName=='total'}">
+	                			<tr>
+	                				<td colspan="4">합계</td>
+	                				<td>${prod.total}</td>
+	                			</tr>
+	                		</c:if>
+               			</c:forEach>
+                	</tbody>
+                </table>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info float-right" id="saveSellButton">저장</button>
+                <button type="button" class="btn btn-info float-right" id="prevSellButton">취소</button>
+            </div>
         </div>
     </div>
 </div>
@@ -180,10 +267,13 @@
 				<div class="card">
 					<div class="card-body">
                         <div id="prevContent">${advice.content}</div> 
-                        <button type="button" class="btn btn-danger float-right ml-2" id="dropAdviceButton">삭제</button>
-                        <button type="button" class="btn btn-info float-right" id="editAdviceButton">수정</button>
 					</div>
 				</div>                
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            	<button type="button" class="btn btn-danger float-right ml-2" id="dropAdviceButton">삭제</button>
+                <button type="button" class="btn btn-info float-right" id="editAdviceButton">수정</button>
             </div>
         </div>
     </div>
@@ -216,9 +306,37 @@
     </div>
 </div>
 
+<div id="dialog-message"></div>
+
 <script>
 
 $(function(){
+	
+	// 임시
+	let parentCategory = $('.parentCategory');
+	
+	parentCategory.change(function(){
+		let parentId = $(this).val();
+		console.log(parentId);
+		if (parentId=='') {
+			$('.childCategory, .product, .productNum').remove()
+			return;
+		};
+		$.ajax({
+			type : 'get',
+			url : '${ctxPath}/product/childCategory/${parentCategoryId}',
+			success : function(result){
+				let childSelect = '<select class="childCategory"><option value="">2차분류</option>';
+				$(result).each(function(i,e){
+					childSelect += '<option value="${e.categoryId}">${e.categoryName}</option>';
+				});
+				childSelect += '</select>'
+				$('.childCategory, .product, .productNum').remove()
+				parentCategory.after(childSelect)
+			}
+		});
+	});
+	
 	// 회원정보 모달
 	$('.customInfo').click(function(){
 		$('#customInfoModal').modal('show');
@@ -247,7 +365,7 @@ $(function(){
         let cno = $('[name="cno"]').val();
         
         $.ajax({
-            url: "${ctxPath}/sell/advice/"+cno,
+            url: "${ctxPath}/update/advice/"+cno,
             type: "POST",
             data: {
                 editedContent: editedContent
@@ -266,25 +384,50 @@ $(function(){
         
     });
     
+    // 상담삭제시 버튼비활성화 세션
+    if (sessionStorage.getItem("adviceDelete") === "true"&& $("#prevContent").text==null) {
+    	$(".adviceRead").prop("disabled", true);
+    }
+    
     // 상담내용 삭제
     $("#dropAdviceButton").click(function () {
         let cno = $('[name="cno"]').val();
-        
-        $.ajax({
-            url: "${ctxPath}/sell/advice/"+cno,
-            type: "delete",
-            success: function (message) {
-                // 성공적인 응답을 받았을 때의 처리
-                console.log(message);
-                $("#adviceReadModal").modal("hide");
-                $("#prevContent").text("상담이력이 없습니다.");
-                $('.adviceContent').find('[name="advice"]').val("상담이력이 없습니다.");
-                $('#adviceReadModal').find('.button').hide();
-            },
-            error: function (xhr, status, error) {
-                console.error(error);
+	   
+        $("#dialog-message").text('상담내용 삭제시 다시 상담을 등록 할 수 없습니다');
+        $("#dialog-message").dialog({
+            modal: true,
+            buttons: {
+                "확인": function() {
+                    console.log("확인 버튼이 눌렸습니다.");
+                    $.ajax({
+                        url: "${ctxPath}/remove/advice/"+cno,
+                        type: "delete",
+                        success: function (message) {
+                            // 성공적인 응답을 받았을 때의 처리
+                            console.log(message);
+                            $("#adviceReadModal").modal("hide");
+                            $("#prevContent").text("");
+                            $('.adviceContent').find('[name="advice"]').val("");
+                            $("#editedContent").val('');
+                         	// 세션에 삭제 상태 정보 저장
+                            sessionStorage.setItem("adviceDelete", "true");
+                            $(".adviceRead").prop("disabled", true);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                "취소": function() {
+                    console.log("취소 버튼이 눌렸습니다.");
+                    $("#adviceEditModal").modal("hide");
+                    $(this).dialog("close");
+                }
             }
         });
+        
+        
         
     });
 	

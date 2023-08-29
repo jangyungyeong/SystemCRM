@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 
 import org.apache.ibatis.type.Alias;
 
-import com.jafa.domain.product.ProductVO;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

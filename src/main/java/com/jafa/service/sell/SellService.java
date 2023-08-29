@@ -3,6 +3,8 @@ package com.jafa.service.sell;
 import java.util.List;
 
 import com.jafa.domain.Criteria;
+import com.jafa.domain.sell.PdCategoryDTO;
+import com.jafa.domain.sell.ProductVO;
 import com.jafa.domain.sell.SellDTO;
 import com.jafa.domain.sell.SellProduct;
 import com.jafa.domain.sell.SellVO;
@@ -22,4 +24,8 @@ public interface SellService {
 	int totalCount(Criteria criteria); // 전체게시물 수
 	
 	List<SellProduct> ProductList(Long cno); // 고객구매상품리스트
+	
+	List<ProductVO> getPdList(); // 상품분류
+	
+	List<PdCategoryDTO> getPdcategoryList(); // 물품분류 
 }

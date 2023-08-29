@@ -91,7 +91,7 @@
 		    p.price, 
 		    s.amount*p.price as total
 		from sell_tbl s, 
-		    Product_tbl p, 
+		    Product_tbl p,
 		    CUSTOMER_TBL c
 		where s.cno = c.cno 
 		    and s.productId = p.productId 
@@ -110,5 +110,16 @@
 		    and s.productId = p.productId 
 		    and s.cno = #{cno}
 		order by amount desc
+    </select>
+    
+    <select id="getProductList" resultType="product">
+    	select * from Product_tbl
+    </select>
+    
+    
+    <select id="getProductCategory" resultType="pdcategory">
+    	select level, parentcategoryId, categoryId, categoryName from pdCategory_tbl
+    		start with parentcategoryId =0
+    		connect by prior categoryId = parentcategoryId
     </select>
 </mapper>

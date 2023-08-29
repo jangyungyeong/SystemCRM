@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.jafa.domain.Criteria;
+import com.jafa.domain.sell.PdCategoryDTO;
+import com.jafa.domain.sell.ProductVO;
 import com.jafa.domain.sell.SellDTO;
 import com.jafa.domain.sell.SellProduct;
 import com.jafa.domain.sell.SellVO;
@@ -34,5 +36,11 @@ public interface SellRepository {
 	
 	// 회원이 구매한 품목 목록
 	List<SellProduct> productList(Long cno);
+	
+	// 상품 분류
+	List<ProductVO> getProductList();
+	
+	// 물품 분류
+	List<PdCategoryDTO> getProductCategory();
 	
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.jafa.domain.Criteria;
+import com.jafa.domain.sell.PdCategoryDTO;
+import com.jafa.domain.sell.ProductVO;
 import com.jafa.domain.sell.SellDTO;
 import com.jafa.domain.sell.SellProduct;
 import com.jafa.domain.sell.SellVO;
@@ -53,6 +55,16 @@ public class SellServiceImpl implements SellService{
 	@Override
 	public List<SellProduct> ProductList(Long cno) {
 		return sellRepository.productList(cno);
+	}
+
+	@Override
+	public List<PdCategoryDTO> getPdcategoryList() {
+		return sellRepository.getProductCategory();
+	}
+
+	@Override
+	public List<ProductVO> getPdList() {
+		return sellRepository.getProductList();
 	}
 
 
