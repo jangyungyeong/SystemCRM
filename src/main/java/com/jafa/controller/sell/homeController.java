@@ -27,6 +27,7 @@ import com.jafa.domain.Criteria;
 import com.jafa.domain.Pagination;
 import com.jafa.domain.advice.AdviceVO;
 import com.jafa.domain.sell.PdCategoryDTO;
+import com.jafa.domain.sell.ProductVO;
 import com.jafa.domain.sell.SellDTO;
 import com.jafa.domain.sell.SellVO;
 import com.jafa.repository.advice.AdviceRepository;
@@ -66,10 +67,9 @@ public class homeController {
 		model.addAttribute("customer", customerService.get(cno));
 		model.addAttribute("advice", adviceRepository.read(cno));
 		
-		sellService.getPdcategoryList().forEach(c-> log.info(c));
-		model.addAttribute("pdCategory", sellService.getPdcategoryList());
-		sellService.getPdList().forEach(d-> log.info(d));
-		model.addAttribute("productList", sellService.getPdList());
+//		sellService.getPdcategoryList().forEach(c-> log.info(c));
+		model.addAttribute("pdCategory", sellService.getPdcategoryList(0));
+		model.addAttribute("productList", sellService.getPdList(5));
 		
 	}
 	
@@ -120,10 +120,17 @@ public class homeController {
 	}
 	
 	// 하위 카테고리 요청
-	@GetMapping("/product/childCategory/{parentCategoryId}") 
+	@GetMapping("/product/childCategory/{parentId}") 
 	@ResponseBody
-	public List<PdCategoryDTO> childCategory(@PathVariable Long parentCategoryId){
-		return sellService.getPdcategoryList();
+	public List<PdCategoryDTO> childCategory(@PathVariable Integer parentId){
+		return sellService.getPdcategoryList(parentId);
+	}
+	
+	// 제품리스트 요청
+	@GetMapping("/product/productList/{categoryId}") 
+	@ResponseBody
+	public List<ProductVO> productList(@PathVariable Integer categoryId){
+		return sellService.getPdList(categoryId);
 	}
 	
 	@PostMapping(value="/update/advice/{cno}", produces = "plain/text;charset=utf-8" )

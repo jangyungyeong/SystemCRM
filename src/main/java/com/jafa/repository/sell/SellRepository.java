@@ -37,10 +37,10 @@ public interface SellRepository {
 	// 회원이 구매한 품목 목록
 	List<SellProduct> productList(Long cno);
 	
-	// 상품 분류
-	List<ProductVO> getProductList();
-	
 	// 물품 분류
-	List<PdCategoryDTO> getProductCategory();
+	List<PdCategoryDTO> getProductCategory(Integer parentcategoryId);
+	
+	// 상품 분류
+	List<ProductVO> getProductList(Integer categoryId);
 	
 }

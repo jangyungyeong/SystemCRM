@@ -77,39 +77,7 @@
 			</div>
 		</div>
 	</div>
-	
-	<!-- 임시 -->
-	<select class="parentCategory">
-		<option value="">1차분류</option>
-		<c:forEach items="${pdCategory}" var="pc">
-			<c:if test="${pc.level==1}">
-				<option value="${pc.categoryId}">${pc.categoryName}</option>
-			</c:if>
-		</c:forEach>
-	</select>
-	<select class="childCategory">
-		<option value="">2차분류</option>
-		<c:forEach items="${pdCategory}" var="pc">
-			<c:if test="${pc.level==2}">
-				<option value="${pc.categoryId}">${pc.categoryName}</option>
-			</c:if>
-		</c:forEach>
-	</select>
-	<select class="product">
-		<option value="">상품명</option>
-		<c:forEach items="${productList}" var="pd">
-				<option value="${pd.categoryId}">${pd.productName}</option>
-		</c:forEach>
-	</select>
-	<select class="productNum">
-		<option value="">품번</option>
-		<c:forEach items="${productList}" var="pd">
-				<option value="${pd.categoryId}">${pd.productNumber}</option>
-		</c:forEach>
-	</select>
 </div>
-
-
 
 
 <form>
@@ -214,41 +182,57 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <table class="table table-striped table-bordered table-hover">
-                	<thead class="thead-light">
-                		<tr>
-                			<th>상품명</th>
-                			<th>품번</th>
-                			<th>수량</th>
-                			<th>단가</th>
-                			<th>합계</th>
-                		</tr>
-                	</thead>
-                	<tbody>
-               			<c:forEach items="${product}" var="prod">
-               				<c:if test="${prod.productName!='total'}">
-	                		<tr>
-	                			<td>${prod.productName}</td>
-	                			<td>${prod.productNumber}</td>
-	                			<td>${prod.amount }</td>
-	                			<td>${prod.price }</td>
-	                			<td>${prod.total}</td>
-	                		<tr>
-	                		</c:if> 
-	                		<c:if test="${prod.productName=='total'}">
-	                			<tr>
-	                				<td colspan="4">합계</td>
-	                				<td>${prod.total}</td>
-	                			</tr>
-	                		</c:if>
-               			</c:forEach>
-                	</tbody>
-                </table>
+                <div class="container">
+                	<div class="selectList">
+						<select class="parentCategory">
+							<option value="">1차분류</option>
+							<c:forEach items="${pdCategory}" var="pc">
+								<option value="${pc.categoryId}">${pc.categoryName}</option>
+							</c:forEach>
+						</select>
+                	</div>
+                	<div class="addProduct">
+                		<form>
+                			<table class="table productTable">
+                				<tr>
+                					<th>분류1</th>
+                					<th>분류2</th>
+                					<th>상품명</th>
+                					<th>품번</th>
+                					<th>단가</th>
+                					<th>수량</th>
+                					<th>삭제</th>
+                				</tr>
+                				<tr>
+                					<c:forEach items="${product}" var="prod">
+			               				<c:if test="${prod.productName!='total'}">
+				                		<tr>
+				                			<td></td>
+				                			<td></td>
+				                			<td>${prod.productName}</td>
+				                			<td>${prod.productNumber}</td>
+				                			<td>${prod.price }</td>
+				                			<td>${prod.amount }</td>
+				                			<td></td>
+				                		<tr>
+				                		</c:if> 
+				                		<c:if test="${prod.productName=='total'}">
+				                			<tr>
+				                				<td colspan="6">합계</td>
+				                				<td>${prod.total}</td>
+				                			</tr>
+				                		</c:if>
+               						</c:forEach>
+                				</tr>
+                			</table>
+                			<button class="btn btn-light" id="saveSellButton">등록</button>
+                		</form>
+                	</div>
+                </div>	
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-info float-right" id="saveSellButton">저장</button>
-                <button type="button" class="btn btn-info float-right" id="prevSellButton">취소</button>
+                <button type="button" class="btn btn-info float-left" id="prevSellButton">취소</button>
             </div>
         </div>
     </div>
@@ -312,39 +296,91 @@
 
 $(function(){
 	
-	// 임시
+	// 구매 변경
 	let parentCategory = $('.parentCategory');
-	
+	let childCategory=null;
+	let product= null;
+	let productNum = $('.productNum');
+	// 1차분류선택시
 	parentCategory.change(function(){
 		let parentId = $(this).val();
-		console.log(parentId);
+		$('.productNumber').remove();
 		if (parentId=='') {
-			$('.childCategory, .product, .productNum').remove()
+			$('.childCategory, .product').remove()
 			return;
 		};
 		$.ajax({
 			type : 'get',
-			url : '${ctxPath}/product/childCategory/${parentCategoryId}',
+			url : '${ctxPath}/product/childCategory/'+parentId,
 			success : function(result){
-				let childSelect = '<select class="childCategory"><option value="">2차분류</option>';
+				let selectTag = '<select class="childCategory"><option value="">2차분류</option>';
 				$(result).each(function(i,e){
-					childSelect += '<option value="${e.categoryId}">${e.categoryName}</option>';
+					selectTag += '<option value="'+ e.categoryId+'">'+ e.categoryName +'</option>'
 				});
-				childSelect += '</select>'
-				$('.childCategory, .product, .productNum').remove()
-				parentCategory.after(childSelect)
+				selectTag += '</select>'
+				$('.childCategory, .product').remove()
+				parentCategory.after(selectTag)
+				childCategory = $('.childCategory')
 			}
 		});
 	});
+	// 2차분류 선택시
+	$('.selectList').on('change','.childCategory',function() {
+		let categoryId = $(this).val();
+		$('.productNumber, .product').remove();
+		
+		if (categoryId=='') {
+			console.log('상품없음')
+			return;
+		};
+		$.ajax({
+			type : 'get',
+			url : '${ctxPath}/product/productList/'+categoryId,
+			success : function(result){
+				let selectTag = '<select class="product"><option value="">상품명</option>';
+				$(result).each(function(i,e){
+					selectTag += '<option value="'+ e.productId+'" data-pnum="'+e.productNumber+'">'+ e.productName +'</option>'
+				});
+				selectTag += '</select>'
+				childCategory.after(selectTag);
+				product = $('.product')
+			}
+		});
+	});
+	// 상품명 선택시
+	$('.selectList').on('change','.product',function(){
+		let categoryId = $(this).val();
+		let pnum = $(this).children("option:selected").data('pnum');
+		$('.productNumber').remove();
+		
+		if (categoryId=='') {
+			console.log('품번없음')
+		};
+		if(pnum!=null){
+			let inputTag = '<input type="text" class="productNumber" value="'+pnum+'">'
+			product.after(inputTag);
+			
+		}
+	});
+	
 	
 	// 회원정보 모달
 	$('.customInfo').click(function(){
 		$('#customInfoModal').modal('show');
 	})
+	
 	// 구매조회 모달
 	$('.sellRead').click(function(){
 		$('#sellReadModal').modal('show');
 	})
+	
+	// 수정 버튼을 클릭하면 구매 변경 모달을 띄우는 함수
+    $("#editSellButton").click(function () {
+        // 상담 조회 모달을 닫습니다.
+        $("#sellReadModal").modal("hide");
+        // 상담 수정 모달을 띄웁니다.
+        $("#sellEditModal").modal("show");
+    });
 	
 	// 상담조회 모달
 	$('.adviceRead').click(function(){

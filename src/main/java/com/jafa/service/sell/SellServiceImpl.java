@@ -58,13 +58,13 @@ public class SellServiceImpl implements SellService{
 	}
 
 	@Override
-	public List<PdCategoryDTO> getPdcategoryList() {
-		return sellRepository.getProductCategory();
+	public List<PdCategoryDTO> getPdcategoryList(Integer parentcategoryId) {
+		return sellRepository.getProductCategory(parentcategoryId);
 	}
 
 	@Override
-	public List<ProductVO> getPdList() {
-		return sellRepository.getProductList();
+	public List<ProductVO> getPdList(Integer categoryId) {
+		return sellRepository.getProductList(categoryId);
 	}
 
 
