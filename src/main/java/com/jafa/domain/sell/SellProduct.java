@@ -18,6 +18,7 @@ import lombok.ToString;
 @Alias("sellprod")
 public class SellProduct {
 	private Long cno;
+	private Long productId;
 	private String productName;
 	private String productNumber;
 	private int amount;

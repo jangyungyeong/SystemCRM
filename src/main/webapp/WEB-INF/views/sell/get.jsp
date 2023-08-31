@@ -13,7 +13,7 @@
 			        	<div class="input-group-prepend">
 			          		<span class="input-group-text">No.</span>
 			        	</div>
-			        	<input class="form-control" name="cno" value="${sell.cno}" readonly="readonly">
+			        	<input class="form-control readNum" name="cno" value="${sell.cno}" readonly="readonly">
 			      	</div>
 			        <div class="input-group mb-3">
 			        	<div class="input-group-prepend">
@@ -173,7 +173,7 @@
 </div>
 <!-- 구매수정 모달 -->
 <div class="modal fade" id="sellEditModal">
-	<div class="modal-dialog">
+	<div class="modal-dialog" style="max-width:800px">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
@@ -181,7 +181,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
-            <div class="modal-body">
+            <div class="modal-body" style="max-height: 500px; overflow-y: auto;">
                 <div class="container">
                 	<div class="selectList">
 						<select class="parentCategory">
@@ -195,8 +195,6 @@
                 		<form>
                 			<table class="table productTable">
                 				<tr>
-                					<th>분류1</th>
-                					<th>분류2</th>
                 					<th>상품명</th>
                 					<th>품번</th>
                 					<th>단가</th>
@@ -206,25 +204,25 @@
                 				<tr>
                 					<c:forEach items="${product}" var="prod">
 			               				<c:if test="${prod.productName!='total'}">
-				                		<tr>
-				                			<td></td>
-				                			<td></td>
-				                			<td>${prod.productName}</td>
-				                			<td>${prod.productNumber}</td>
-				                			<td>${prod.price }</td>
-				                			<td>${prod.amount }</td>
-				                			<td></td>
-				                		<tr>
+					                		<tr>
+					                			<td>${prod.productName}</td>
+					                			<td>${prod.productNumber}</td>
+					                			<td>${prod.price }</td>
+					                			<td><input type="number" value="${prod.amount }"></td>
+					                			<td><button class="productRowDel" data-productId="${prod.productId }">삭제</button></td>
+					                		<tr>
 				                		</c:if> 
-				                		<c:if test="${prod.productName=='total'}">
-				                			<tr>
-				                				<td colspan="6">합계</td>
-				                				<td>${prod.total}</td>
-				                			</tr>
-				                		</c:if>
                						</c:forEach>
                 				</tr>
                 			</table>
+                			<c:forEach items="${product}" var="prod">
+	                			<c:if test="${prod.productName=='total'}">
+		                			<tr>
+		                				<td colspan="4">합계</td>
+		                				<td>${prod.total}</td>
+		                			</tr>
+		                		</c:if>
+	                		</c:forEach>
                 			<button class="btn btn-light" id="saveSellButton">등록</button>
                 		</form>
                 	</div>
@@ -295,74 +293,6 @@
 <script>
 
 $(function(){
-	
-	// 구매 변경
-	let parentCategory = $('.parentCategory');
-	let childCategory=null;
-	let product= null;
-	let productNum = $('.productNum');
-	// 1차분류선택시
-	parentCategory.change(function(){
-		let parentId = $(this).val();
-		$('.productNumber').remove();
-		if (parentId=='') {
-			$('.childCategory, .product').remove()
-			return;
-		};
-		$.ajax({
-			type : 'get',
-			url : '${ctxPath}/product/childCategory/'+parentId,
-			success : function(result){
-				let selectTag = '<select class="childCategory"><option value="">2차분류</option>';
-				$(result).each(function(i,e){
-					selectTag += '<option value="'+ e.categoryId+'">'+ e.categoryName +'</option>'
-				});
-				selectTag += '</select>'
-				$('.childCategory, .product').remove()
-				parentCategory.after(selectTag)
-				childCategory = $('.childCategory')
-			}
-		});
-	});
-	// 2차분류 선택시
-	$('.selectList').on('change','.childCategory',function() {
-		let categoryId = $(this).val();
-		$('.productNumber, .product').remove();
-		
-		if (categoryId=='') {
-			console.log('상품없음')
-			return;
-		};
-		$.ajax({
-			type : 'get',
-			url : '${ctxPath}/product/productList/'+categoryId,
-			success : function(result){
-				let selectTag = '<select class="product"><option value="">상품명</option>';
-				$(result).each(function(i,e){
-					selectTag += '<option value="'+ e.productId+'" data-pnum="'+e.productNumber+'">'+ e.productName +'</option>'
-				});
-				selectTag += '</select>'
-				childCategory.after(selectTag);
-				product = $('.product')
-			}
-		});
-	});
-	// 상품명 선택시
-	$('.selectList').on('change','.product',function(){
-		let categoryId = $(this).val();
-		let pnum = $(this).children("option:selected").data('pnum');
-		$('.productNumber').remove();
-		
-		if (categoryId=='') {
-			console.log('품번없음')
-		};
-		if(pnum!=null){
-			let inputTag = '<input type="text" class="productNumber" value="'+pnum+'">'
-			product.after(inputTag);
-			
-		}
-	});
-	
 	
 	// 회원정보 모달
 	$('.customInfo').click(function(){
@@ -496,3 +426,5 @@ $(function(){
 })
 
 </script>
+<script src="${ctxPath}/resources/js/sell/sellCategory.js"></script>
+<script src="${ctxPath}/resources/js/sell/sellEditService.js"></script>

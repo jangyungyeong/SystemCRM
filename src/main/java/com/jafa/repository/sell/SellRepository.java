@@ -43,4 +43,7 @@ public interface SellRepository {
 	// 상품 분류
 	List<ProductVO> getProductList(Integer categoryId);
 	
+	// 상품정보 조회
+	ProductVO productInfo(Integer productId);
+	
 }

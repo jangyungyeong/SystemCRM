@@ -67,5 +67,10 @@ public class SellServiceImpl implements SellService{
 		return sellRepository.getProductList(categoryId);
 	}
 
+	@Override
+	public ProductVO productInfo(Integer productId) {
+		return sellRepository.productInfo(productId);
+	}
+
 
 }

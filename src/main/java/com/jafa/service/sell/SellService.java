@@ -28,5 +28,7 @@ public interface SellService {
 	List<PdCategoryDTO> getPdcategoryList(Integer parentcategoryId); // 물품분류 
 	
 	List<ProductVO> getPdList(Integer categoryId); // 상품분류
+	
+	ProductVO productInfo(Integer productId);
 
 }

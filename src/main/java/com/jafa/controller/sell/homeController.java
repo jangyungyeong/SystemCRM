@@ -29,6 +29,7 @@ import com.jafa.domain.advice.AdviceVO;
 import com.jafa.domain.sell.PdCategoryDTO;
 import com.jafa.domain.sell.ProductVO;
 import com.jafa.domain.sell.SellDTO;
+import com.jafa.domain.sell.SellProduct;
 import com.jafa.domain.sell.SellVO;
 import com.jafa.repository.advice.AdviceRepository;
 import com.jafa.service.customer.CustomerService;
@@ -131,6 +132,19 @@ public class homeController {
 	@ResponseBody
 	public List<ProductVO> productList(@PathVariable Integer categoryId){
 		return sellService.getPdList(categoryId);
+	}
+	
+	// 제품정보 요청
+	@GetMapping("/product/productInfo/{productId}") 
+	@ResponseBody
+	public ProductVO productInfo(@PathVariable Integer productId){
+		return sellService.productInfo(productId);
+	}
+	
+	// 판매변경모달창으로 구매정보넘김
+	@GetMapping("/product/getEditProduct/{cno}")
+	public ResponseEntity<List<SellProduct>> getEditProduct(@PathVariable Long cno){
+		return new ResponseEntity<>(sellService.ProductList(cno),HttpStatus.OK); 
 	}
 	
 	@PostMapping(value="/update/advice/{cno}", produces = "plain/text;charset=utf-8" )

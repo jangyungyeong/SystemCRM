@@ -85,6 +85,8 @@
     
     <select id="productList" resultType="sellprod">
 		select
+			s.cno,
+            p.PRODUCTID,
 		    p.productName,
 		    p.productNumber,
 		    s.amount,
@@ -98,6 +100,8 @@
 		    and s.cno = #{cno}
 		union 
 		select
+			0,
+			0,
 		    'total',
 		    '품번',
 		    0,
@@ -121,6 +125,10 @@
     
     <select id="getProductList" resultType="product">
     	select * from Product_tbl where categoryId=#{categoryId}
+    </select>
+    
+    <select id="productInfo" resultType="product">
+    	select * from Product_tbl where productId=#{productId}
     </select>
     
 </mapper>
