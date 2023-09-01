@@ -194,36 +194,13 @@
                 	<div class="addProduct">
                 		<form>
                 			<table class="table productTable">
-                				<tr>
-                					<th>상품명</th>
-                					<th>품번</th>
-                					<th>단가</th>
-                					<th>수량</th>
-                					<th>삭제</th>
-                				</tr>
-                				<tr>
-                					<c:forEach items="${product}" var="prod">
-			               				<c:if test="${prod.productName!='total'}">
-					                		<tr>
-					                			<td>${prod.productName}</td>
-					                			<td>${prod.productNumber}</td>
-					                			<td>${prod.price }</td>
-					                			<td><input type="number" value="${prod.amount }"></td>
-					                			<td><button class="productRowDel" data-productId="${prod.productId }">삭제</button></td>
-					                		<tr>
-				                		</c:if> 
-               						</c:forEach>
-                				</tr>
+                				
                 			</table>
-                			<c:forEach items="${product}" var="prod">
-	                			<c:if test="${prod.productName=='total'}">
-		                			<tr>
-		                				<td colspan="4">합계</td>
-		                				<td>${prod.total}</td>
-		                			</tr>
-		                		</c:if>
-	                		</c:forEach>
                 			<button class="btn btn-light" id="saveSellButton">등록</button>
+               				<div>
+               					합계 : 
+               					<span class="total"></span>
+               				</div>
                 		</form>
                 	</div>
                 </div>	
@@ -310,7 +287,13 @@ $(function(){
         $("#sellReadModal").modal("hide");
         // 상담 수정 모달을 띄웁니다.
         $("#sellEditModal").modal("show");
+        editCategory();
     });
+	
+	$("#prevSellButton").click(function(){
+		$('.parentCategory,.childCategory,.product').val('');
+		$("#sellEditModal").modal("hide");
+	})
 	
 	// 상담조회 모달
 	$('.adviceRead').click(function(){

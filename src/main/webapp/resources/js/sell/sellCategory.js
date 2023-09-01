@@ -87,11 +87,11 @@ $(function(){
 		`<tr>
 			<td>${result.productName}</td>
 			<td>${result.productNumber == null ? '' : result.productNumber}</td>
-			<td>${result.price}</td>
-			<td><input type="number" class="amountNum">
+			<td class="price">${result.price}</td>
+			<td><input type="number" name="number" value="1" min="1"></td>
 			<td><button class="productRowDel" data-productId="${result.productId}">삭제</button></td>
 		</tr>`
-		
+
 		// 제품이 있으면 추가하지 않음	
 		if(productIdList.includes(result.productId)){
 			return;
@@ -99,32 +99,54 @@ $(function(){
 		
 		productIdList.push(result.productId);
 		productTable.append(productInfo);
-		console.log(productIdList)
+
+		let amount = $('[name="number"]').val();
+		let plusTotal = result.price * amount;
+		console.log(plusTotal)
+		
 	}
+		
 	
 	productTable.on('click','.productRowDel',function(){
 		let productId = $(this).data('productId');
 		productIdList = productIdList.filter(e=> e != productId);
 		$(this).closest('tr').remove();
-		console.log(productIdList);
 	})
 	
+});
+// 이미 판매한 상품 변경처리
+function editCategory(){
+	let productTable = $('.productTable');
+	let cnoValue = $('.readNum[name="cno"]').val()
+	let param = {cno:cnoValue};
 	
-	$('.amountNum').change(function(){
-		console.log('test');
-	});
-	
-	// 이미 판매한 상품 변경처리
-	let cnoValue = $('[name="cno"]').val()
-	
-	let editCategory = function(){
-		let param = {cno:cnoValue};
-		sellService.ProductList(param,function(
-				cno,productId,productName,productNumber,amount,
-				price,total){
-			
-			let editCategory='';
-			
+	sellEditService.ProductList(param,function(sellProduct){
+		console.log(sellProduct);
+		let editProduct=`
+			<tr>
+				<th>상품명</th>
+				<th>품번</th>
+				<th>단가</th>
+				<th>수량</th>
+				<th>삭제</th>
+			</tr>
+		`;
+		
+		$.each(sellProduct,function(idx,elem){
+			if(elem.productName!='total'){
+				
+				editProduct += `
+					<tr>
+						<td>${elem.productName}</td>
+	        			<td>${elem.productNumber || ''}</td>
+	        			<td class="price">${elem.price }</td>
+	        			<td><input type="number" value="${elem.amount }" min="1"></td>
+	        			<td><button class="productRowDel" data-productId="${elem.productId }">삭제</button></td><tr>
+				    </tr>`
+			} else {
+				$('.total').html(elem.total);
+			}
 		})
-	}
-})
+		productTable.html(editProduct);
+	});
+}

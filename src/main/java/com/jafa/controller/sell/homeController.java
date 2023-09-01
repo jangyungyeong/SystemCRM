@@ -150,12 +150,8 @@ public class homeController {
 	@PostMapping(value="/update/advice/{cno}", produces = "plain/text;charset=utf-8" )
 	@ResponseBody
 	public ResponseEntity<String> updateAdvice(@PathVariable Long cno, String editedContent){
-		log.info(cno);
-		log.info(editedContent);
-		
 		try {
             AdviceVO advice = adviceRepository.read(cno);
-            log.info(advice);
             if (advice == null) {
                 return ResponseEntity.notFound().build();
             }
@@ -173,13 +169,10 @@ public class homeController {
 	@DeleteMapping(value="/remove/advice/{cno}", produces = "plain/text;charset=utf-8" )
 	@ResponseBody
 	public ResponseEntity<String> dropAdvice(@PathVariable Long cno, HttpSession session){
-		log.info(cno);
 		
 		try {
 			AdviceVO advice = adviceRepository.read(cno);
-			log.info(advice);
 			if (advice == null) {
-				log.info("다시 등록");
 				return ResponseEntity.status(HttpStatus.SEE_OTHER)
 						.location(URI.create("/update/advice/{cno}")).build();
 			}
