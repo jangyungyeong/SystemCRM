@@ -81,7 +81,7 @@
 
 
 <form>
-	<input type="hidden" name="cno" id="cno" value="${sell.cno}">
+	<input type="hidden" name="cno" id="cno" value="${sell.cno}">	
 </form>
 
 <%@ include file="../includes/footer.jsp" %>
@@ -380,7 +380,7 @@ $(function(){
         
     });
 	
-	// 목록 or 삭제 페이지로
+	// 목록 or 수정 페이지로
 	let form = $('form')
 	$('.getBtns button').click(function(){
 		let operration = $(this).data('oper');

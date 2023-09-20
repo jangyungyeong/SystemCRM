@@ -1,5 +1,3 @@
-let productIdList = [];
-
 $(function(){
 	
 	// 구매 변경
@@ -83,14 +81,15 @@ $(function(){
 	});
 	
 	// 제품목록 추가
+	let productIdList = [];
 	function productListRendering(result){
 		productInfo = 
 		`<tr>
 			<td>${result.productName}</td>
 			<td>${result.productNumber == null ? '' : result.productNumber}</td>
 			<td class="price">${result.price}</td>
-			<td><input type="number" value="1" min="1"></td>
-			<td><button class="productRowDel" data-productid="${result.productId}">삭제</button></td>
+			<td><input type="number" name="number" value="1" min="1"></td>
+			<td><button class="productRowDel" data-productId="${result.productId}">삭제</button></td>
 		</tr>`
 
 		// 제품이 있으면 추가하지 않음	
@@ -101,19 +100,20 @@ $(function(){
 		productIdList.push(result.productId);
 		productTable.append(productInfo);
 
-		calcSum();
+		let amount = $('[name="number"]').val();
+		let plusTotal = result.price * amount;
+		console.log(plusTotal)
+		
 	}
 		
 	
 	productTable.on('click','.productRowDel',function(){
-		let productId = $(this).data('productid');
+		let productId = $(this).data('productId');
 		productIdList = productIdList.filter(e=> e != productId);
 		$(this).closest('tr').remove();
-		calcSum();
 	})
 	
 });
-
 // 이미 판매한 상품 변경처리
 function editCategory(){
 	let productTable = $('.productTable');
@@ -121,7 +121,7 @@ function editCategory(){
 	let param = {cno:cnoValue};
 	
 	sellEditService.ProductList(param,function(sellProduct){
-		
+		console.log(sellProduct);
 		let editProduct=`
 			<tr>
 				<th>상품명</th>
@@ -134,7 +134,7 @@ function editCategory(){
 		
 		$.each(sellProduct,function(idx,elem){
 			if(elem.productName!='total'){
-				productIdList.push(elem.productId);
+				
 				editProduct += `
 					<tr>
 						<td>${elem.productName}</td>
@@ -149,21 +149,4 @@ function editCategory(){
 		})
 		productTable.html(editProduct);
 	});
-	
-	$('.productTable').on('change','[type="number"]',function(){
-		calcSum();
-	});
-}
-
-function calcSum(){
-	console.log('합계계산');
-	let result = 0;
-	$('.price').each(function(i,elem){
-		console.log($(elem).next().find('input').val());
-		let price = $(elem).html();
-		let amount = $(elem).next().find('input').val();
-		result+=price*amount	
-	});
-	
-	$('.total').html(result)
 }

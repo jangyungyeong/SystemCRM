@@ -10,7 +10,6 @@ import com.jafa.domain.sell.ProductVO;
 import com.jafa.domain.sell.SellDTO;
 import com.jafa.domain.sell.SellProduct;
 import com.jafa.domain.sell.SellVO;
-import com.jafa.domain.staff.StaffVO;
 
 public interface SellRepository {
 

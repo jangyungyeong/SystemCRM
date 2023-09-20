@@ -13,7 +13,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,17 +31,16 @@ import com.jafa.domain.sell.ProductVO;
 import com.jafa.domain.sell.SellDTO;
 import com.jafa.domain.sell.SellProduct;
 import com.jafa.domain.sell.SellVO;
-import com.jafa.domain.staff.StaffVO;
 import com.jafa.repository.advice.AdviceRepository;
 import com.jafa.service.customer.CustomerService;
 import com.jafa.service.sell.SellService;
-import com.jafa.service.staff.StaffService;
 
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
 public class homeController {
+
 	@Autowired
 	SellService sellService;
 	
@@ -51,9 +49,13 @@ public class homeController {
 	
 	@Autowired
 	AdviceRepository adviceRepository;
-		
+	
+	public homeController() {
+		System.out.println("HomeController가 생성되었습니다.");
+	}
+	
 	@GetMapping("/")
-	public String home(Long cno, Model model, Criteria criteria) {
+	public String home(Model model, Criteria criteria) {
 		model.addAttribute("p", new Pagination(criteria, sellService.totalCount(criteria)));
 		model.addAttribute("list", sellService.SellList(criteria));
 		return "sell/home";
@@ -66,8 +68,33 @@ public class homeController {
 		model.addAttribute("customer", customerService.get(cno));
 		model.addAttribute("advice", adviceRepository.read(cno));
 		
+//		sellService.getPdcategoryList().forEach(c-> log.info(c));
 		model.addAttribute("pdCategory", sellService.getPdcategoryList(0));
 		model.addAttribute("productList", sellService.getPdList(5));
+		
+	}
+	
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/sell/modify")
+	public String modify(Long cno, Model model, Criteria criteria, Authentication auth) throws AccessDeniedException{
+		SellDTO vo = sellService.get(cno);
+		String staffname = auth.getName();
+		if (!vo.getStaffId().equals(staffname) && !auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MANAGER"))) {
+			return "accessError";
+		}
+		model.addAttribute("sell", vo);
+		return "sell/modify";
+	}
+	
+	@PreAuthorize("isAuthenticated() and principal.username==#vo.staffId or hasRole('ROLE_MANAGER')")
+	@PostMapping("/sell/modify")
+	public String modify(SellVO vo, RedirectAttributes rttr, Criteria criteria) {
+		if (sellService.modify(vo)) {
+			rttr.addFlashAttribute("result", vo.getCno());
+			rttr.addFlashAttribute("operation", "modify");
+		}
+		return "redirect:/"+criteria.getListLink();
 	}
 	
 	@PreAuthorize("isAuthenticated()")
@@ -85,7 +112,7 @@ public class homeController {
 	
 	@PreAuthorize("isAuthenticated() and principal.username==#staffId or hasRole('ROLE_MANAGER')")
 	@PostMapping("/sell/remove")
-	public String remove(Long cno, RedirectAttributes rttr, Criteria criteria, String staffId) {
+	public String remove(Long cno, RedirectAttributes rttr, Criteria criteria, String staffName) {
 		if (sellService.remove(cno)) {
 			rttr.addFlashAttribute("result", cno);
 			rttr.addFlashAttribute("operation", "remove");
