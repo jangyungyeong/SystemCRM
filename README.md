@@ -2,7 +2,7 @@
 
 <p align="center"><img src="https://github.com/jangyungyeong/SystemCRM/assets/117636044/2d0eaa56-c7df-4fa1-8121-fe638ae16966" width="400" ></br>
   <a href="https://hits.seeyoufarm.com">
-https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fjangyungyeong%2FSystemCRM.git&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false
+<img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fjangyungyeong%2FSystemCRM.git&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false">
   </a>
 </p>
 </br>
