@@ -1,10 +1,8 @@
 # SystemCRM
 
-<p align="center"><img src="https://github.com/jangyungyeong/mat.company/assets/117636044/b7d811a1-9a36-4d8b-85c9-15f81b60ef69" width="300" ></br>
-  <a href="https://hits.seeyoufarm.com">    
-    <img src="https://github.com/jangyungyeong/SystemCRM/assets/117636044/2d0eaa56-c7df-4fa1-8121-fe638ae16966">
-  </a>
-  </p>
+<p align="center"><img src="https://github.com/jangyungyeong/SystemCRM/assets/117636044/2d0eaa56-c7df-4fa1-8121-fe638ae16966" width="300" ></br>
+  <a href="https://hits.seeyoufarm.com"></a>
+</p>
 </br>
 
 ## mat
