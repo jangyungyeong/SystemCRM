@@ -62,13 +62,17 @@ Customer Relationship Management(고객 관계 관리)</br>
 <p align="center"></p>
 <div align=center> 
   <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
+  </br>
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
+  </br>
   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
   <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
   <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> 
-  <img src="https://img.shields.io/badge/mariaDB-003545?style=for-the-badge&logo=mariaDB&logoColor=white">
-  <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> 
+  </br>
+  <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+  <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white">
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 </div>
 </br>
@@ -84,19 +88,19 @@ Customer Relationship Management(고객 관계 관리)</br>
 <table>
   <tr>
     <td>메인페이지</td>
-    <td>소개페이지</td>
+    <td>고객목록페이지</td>
   </tr>
   <tr>
-    <td><img src="https://github.com/jangyungyeong/mat.company/assets/117636044/5e239372-e8eb-4857-a2e7-3a47c7a5a4f5"></td>
-    <td><img src="https://github.com/jangyungyeong/mat.company/assets/117636044/c4247f46-f5e5-4e3e-b8ce-18fafff9aa9c"></td>
+    <td><img src="https://github.com/jangyungyeong/SystemCRM/assets/117636044/853eac92-30f4-448e-9411-21dfeb69baec"></td>
+    <td><img src="https://github.com/jangyungyeong/SystemCRM/assets/117636044/b519dff6-08d5-4bd7-8bad-73dab182972d"></td>
   </tr>
   <tr>
-    <td>프로젝트페이지</td>
-    <td>문의페이지</td>
+    <td>마이페이지</td>
+    <td>가입페이지</td>
   </tr>
   <tr>
-    <td><img src="https://github.com/jangyungyeong/mat.company/assets/117636044/c88c0ddd-78d5-4107-96bf-37ab029be062"></td>
-    <td><img src="https://github.com/jangyungyeong/mat.company/assets/117636044/630d0062-2a7f-4147-8df4-110c72b8936b"></td>
+    <td><img src="https://github.com/jangyungyeong/SystemCRM/assets/117636044/47b162e1-b7e1-42b0-9716-f02c8f91f270"></td>
+    <td><img src="https://github.com/jangyungyeong/SystemCRM/assets/117636044/d2980226-fae1-46e6-848b-16a9faaeca61"></td>
   </tr>
 </table>
 </br>
@@ -108,15 +112,14 @@ Customer Relationship Management(고객 관계 관리)</br>
 ## 주요기능 :pushpin:
 <p align="center"></p></br>
 
-  #### :star: 슬라이드 기능
-  * 다양한 컨텐츠를 왼쪽또는 오른쪽으로 밀어서 볼수있음 
-  * 사용자위주 경험을 제공할수 있고 복잡한 레이아웃이 단순해져 가독성이 올라감
+  #### :star: 고객의 정보 등록/조회/수정/삭제 
+  * 가입인증된 사용자가 등록한 고객을 조회하고 정보를 수정하고 삭제할수 있습니다.
   
-  #### :star: 마우스 오버 기능
-  * 마우스를 컨텐츠에 올렷다 내릴때 이벤트 발생
-  * 이벤트를 통해 사용자의 흥미를 이끌수 있고 전달하고자 하는 내용을 기억시킬수 있음
+  #### :star: 카테고리별로 선택하여 손쉽게 판매한상품을 등록하고 상품가격이 판매합계에 바로적용
+  * 고객에게 판매한 상품을 1차분류, 2차분류, 상품명, 품번 카테고리에서 클릭하여 선택가능
+  * 판매한 상품을 등록/변경/삭제할때마다 자동으로 판매합계에 적용되어 바로바로 확인이 가능
     
-  #### :star: 스크롤 기능
+  #### :star: 사용자 권한을 부여해서 고객 정보를 보호하고 보안 강화
   * 스크롤을 일정길이만큼 내린순간 이벤트 발생
   * 스크롤을 많이내린상태에서 페이지 이동을 원할때 다시 스크롤을 올리지 않아도 되서 시간이 단축됨 
 </br>
@@ -130,7 +133,5 @@ Customer Relationship Management(고객 관계 관리)</br>
 <p align="center"></p></br>
 
   #### 디렉토리 구조
-
-![image](https://github.com/jangyungyeong/mat.company/assets/117636044/8e76948b-6d81-4e0f-94a2-dfdb79543221)
 
 
