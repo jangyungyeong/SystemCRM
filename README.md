@@ -7,12 +7,11 @@
 </p>
 </br>
 
-## mat
+## CRM
 <p align="center"></p>
-Make a turn(생각의 방향을 바꾸다)</br>
-아이덴티디 개발/관리 서비스를 제공하는 브랜딩 전문 기업의 웹 페이지 디자인</br>
-개발기간 : 2022.09 - 2022.10 </br>
-웹사이트 : http://mat.dothome.co.kr/
+Customer Relationship Management(고객 관계 관리)</br>
+고객 관리를 통해 기업과 고객 간의 친밀한 관계를 구축하고 고객 충성도 향상, 나아가 매출을 증진시키는데 기여하는 소프트웨어 솔루션</br>
+개발기간 : 2023.08 - 2023.09 </br>
 </br></br>
 
 
@@ -41,12 +40,18 @@ Make a turn(생각의 방향을 바꾸다)</br>
 ## :loudspeaker: 프로젝트 소개
 <p align="center"></p></br>
 
-* 식당에서 밥을먹고 카페를 가고 옷을 구매하는 과정에서 저렴한 가격과 많은양을 내새우기 보다 브랜드가 추구하는 가치를 독창적으로 풀어가는 브랜드를 알아보고 소비하는것을 즐겼습니다.
-그래서 이런 브랜드들이 더 많아지고 많은사람들이 알아봐주고 브랜딩에 대한 중요성을 알리고 싶어서 mat라는 가상의 브랜딩 사이트를 만들게 되었습니다.
+* 고객정보를 한곳에서 관리합니다
+  - 고객관리 페이지에서 고객의 정보, 구매이력, 상담기록 등을 쉽게 찾고 활용할 수 있습니다.
   
-* 여러기업/브랜드들이 우리의 브랜딩 컨설팅을 통해 어떻게 바뀌었는지 정보를 확인할수 있고 신청서를 작성하여 컨설팅 예약이 가능합니다.
-  - 각각 브랜드에 맞게 제안된 스토리텔링, 로고, 아이덴티티, 인테리어 등을 확인할수 있습니다.
-  - 예약신청서의 질의응답을 작성하고 첨부파일을 보냄으로써 맞춤 컨설팅이 가능합니다
+* 고객과의 관계가 한층 더 가까워질수 있습니다
+  - 고객 한명한명의 개인화된 정보가 저장되있어서 그에 맞는 서비스를 제공할수 있습니다
+  - 고객과 상호작용하는 기회가 최적화 되어 고객 이해에 도움이 됩니다
+ 
+* 고객 서비스가 향상됩니다
+  - 고객 정보 조회와 니즈 파악이 빠르게 이루어져 고객의 만족도를 높이고 효율적으로 대응할수 있습니다
+
+* 판매 수익이 증가됩니다
+   - 고객에 대한 기록을 통해 판매기회를 놓치지 않도록 도와주고 매출을 조회하여 효과적인 마케팅을 도입, 수익을 향상시킬 수 있습니다 
 </br>
 
 
@@ -56,10 +61,14 @@ Make a turn(생각의 방향을 바꾸다)</br>
 <div align=center><h2>📚 STACKS</h2></div></br>
 <p align="center"></p>
 <div align=center> 
+  <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
   <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
+  <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> 
+  <img src="https://img.shields.io/badge/mariaDB-003545?style=for-the-badge&logo=mariaDB&logoColor=white">
+  <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> 
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 </div>
 </br>
@@ -117,6 +126,7 @@ Make a turn(생각의 방향을 바꾸다)</br>
 </br>
 
 ## 아키텍쳐
+<img src="https://github.com/jangyungyeong/SystemCRM/assets/117636044/2d0eaa56-c7df-4fa1-8121-fe638ae16966" width="400" >
 <p align="center"></p></br>
 
   #### 디렉토리 구조
