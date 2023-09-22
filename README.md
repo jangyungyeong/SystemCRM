@@ -130,8 +130,168 @@ Customer Relationship Management(고객 관계 관리)</br>
 ## 아키텍쳐
 <p align="center"></p></br>
 
-  #### 디렉토리 구조
-  <img src="https://github.com/jangyungyeong/SystemCRM/assets/117636044/deaab5c4-837c-457e-927a-662578fd5d70" width="600">
+<details>
+  <summary><h4>디렉토리 구조</h4></summary>
+  <div markdown="1">
+  
+D:.</br>
+|   .classpath</br>
+|   .gitignore</br>
+|   .project</br>
+|   pom.xml</br>
++---src</br>
+   +---main</br>
+      +---java</br>
+      |   \---com</br>
+      |       \---jafa</br>
+      |           +---config : 애플리케이션 설정</br>
+      |           |       RootConfig.java : DB관리, 이메일발송 설정 및 초기화</br>
+      |           |       SecurityConfig.java : 보안구성, 사용자 인증 및 접근제어 관리 설정</br>
+      |           |       SecurityInitializer.java : 보안 설정 활성화</br>
+      |           |       ServletConfig.java : 뷰 리졸버와 정적리소스 핸들러 설정</br>
+      |           |       WebConfig.java : SpringMVC 설정 초기화</br>
+      |           |</br>
+      |           +---controller : 웹 요청처리</br>
+      |           |   +---customer</br>
+      |           |   |       CustomerController.java : 고객정보관리</br>
+      |           |   |</br>
+      |           |   +---sell</br>
+      |           |   |       homeController.java : 판매정보관리</br>
+      |           |   |</br>
+      |           |   \---staff</br>
+      |           |           StaffController.java : 직원정보관리</br>
+      |           |</br>
+      |           +---domain : 데이터 정의</br>
+      |           |   |   Criteria.java : 페이징 및 검색처리</br>
+      |           |   |   Pagination.java : 페이지네이션</br>
+      |           |   |</br>
+      |           |   +---advice</br>
+      |           |   |       AdviceVO.java : 상담정보</br>
+      |           |   |</br>
+      |           |   +---customer</br>
+      |           |   |       CustomerVO.java : 고객정보</br>
+      |           |   |</br>
+      |           |   +---sell</br>
+      |           |   |       PdCategoryDTO.java : 상품카테고리</br>
+      |           |   |       ProductVO.java : 상품정보</br>
+      |           |   |       SellDTO.java : 판매목록/조회</br>
+      |           |   |       SellProduct.java : 판매상품정보</br>
+      |           |   |       SellVO.java : 판매정보</br>
+      |           |   |</br>
+      |           |   \---staff</br>
+      |           |           AuthVO.java : 직원권한</br>
+      |           |           StaffVO.java : 직원정보</br>
+      |           |</br>
+      |           +---exception : 예외처리</br>
+      |           |       ExceptionAdvice.java : 응답상태코드, 일반적 예외처리</br>
+      |           |       PasswordMisMatchException.java : 비밀번호 불일치 예외처리</br>
+      |           |</br>
+      |           +---repository : DB상호작용</br>
+      |           |   +---advice</br>
+      |           |   |       AdviceRepository.java : 상담에 대한 DB작업 수행</br>
+      |           |   |</br>
+      |           |   +---customer</br>
+      |           |   |       CustomerRepository.java : 고객에 대한 DB작업 수행</br>
+      |           |   |</br>
+      |           |   +---sell</br>
+      |           |   |       SellRepository.java : 판매에 대한 DB작업 수행</br>
+      |           |   |</br>
+      |           |   \---staff : 직원에 대한 DB작업 수행</br>
+      |           |           AuthRepository.java</br>
+      |           |           StaffRepository.java</br>
+      |           |</br>
+      |           +---security</br>
+      |           |       CustomAccessDeniedHandler.java : 접근 거부 핸들러</br>
+      |           |       CustomAuthenticationFailureHandler.java : 사용자 인증 실패 핸들러</br>
+      |           |       CustomAuthenticationSuccessHandler.java : 사용자 인증 성공 핸들러</br>
+      |           |       CustomUser.java : 사용자 정보</br>
+      |           |       CustomUserDetailService.java : 로그인시 사용자 정보 로드</br>
+      |           |</br>
+      |           \---service : 비즈니스 로직 구현</br>
+      |               +---customer : 고객 데이터</br>
+      |               |       CustomerService.java</br>
+      |               |       CustomerServiceImpl.java</br>
+      |               |</br>
+      |               +---sell : 판매 데이터</br>
+      |               |       SellService.java</br>
+      |               |       SellServiceImpl.java</br>
+      |               |</br>
+      |               \---staff : 직원 데이터</br>
+      |                       MailSendService.java : 이메일 서비스 제공</br>
+      |                       NotFoundMemberException.java : 존재하지않는 사용자 예외처리</br>
+      |                       StaffService.java</br>
+      |                       StaffServiceImpl.java</br>
+      |</br>
+      +---resources</br>
+      |   |   log4j.xml</br>
+      |   |   log4jdbc.log4j2.properties</br>
+      |   |</br>
+      |   +---database</br>
+      |   |       db.properties</br>
+      |   |</br>
+      |   \---mappers : 매핑정의, SQL쿼리제공</br>
+      |       +---advice</br>
+      |       |       AdviceMapper.xml : 상담정보 매핑</br>
+      |       |</br>
+      |       +---customer</br>
+      |       |       CustomerMapper.xml : 고객정보 매핑</br>
+      |       |</br>
+      |       +---sell</br>
+      |       |       SellMapper.xml : 판매정보 매핑</br>
+      |       |</br>
+      |       \---staff</br>
+      |               AuthMapper.xml : 권한정보 매핑</br>
+      |               StaffMapper.xml : 직원정보 매핑</br>
+      |</br>
+      \---webapp</br>
+          +---META-INF</br>
+          |       MANIFEST.MF</br>
+          |</br>
+          +---resources</br>
+          |   +---images</br>
+          |   |       userImage.png</br>
+          |   |</br>
+          |   \---js</br>
+          |       \---sell</br>
+          |               sellCategory.js : 구매 카테고리 구현</br>
+          |               sellEditService.js : 판매 정보 받음</br>
+          |</br>
+          \---WEB-INF</br>
+              |   web.xml</br>
+              |</br>
+              +---tags</br>
+              |       formatDateTime.tag</br>
+              |</br>
+              \---views : 페이지 구현</br>
+                  |   accessError.jsp : 접근제한</br>
+                  |   custom404.jsp : 존재하지않는 페이지</br>
+                  |   error_page.jsp : 오류</br>
+                  |</br>
+                  +---customer : 고객관리</br>
+                  |       get.jsp</br>
+                  |       list.jsp</br>
+                  |       modify.jsp</br>
+                  |       register.jsp</br>
+                  |</br>
+                  +---includes : 페이지 상/하단</br>
+                  |       footer.jsp</br>
+                  |       header.jsp</br>
+                  |</br>
+                  +---sell : 판매관리</br>
+                  |       get.jsp</br>
+                  |       home.jsp</br>
+                  |       register.jsp</br>
+                  |</br>
+                  \---staff : 로그인/회원가입</br>
+                          findStaffInfo.jsp</br>
+                          join.jsp</br>
+                          login.jsp</br>
+                          mypage.jsp</br>
+                          step1.jsp</br>
+                          step2.jsp
+  
+  </div>
+</details>
 
 
 
