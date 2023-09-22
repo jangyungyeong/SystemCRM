@@ -120,8 +120,7 @@ Customer Relationship Management(고객 관계 관리)</br>
   * 판매한 상품을 등록/변경/삭제할때마다 자동으로 판매합계에 적용되어 바로바로 확인이 가능
     
   #### :star: 사용자 권한을 부여해서 고객 정보를 보호하고 보안 강화
-  * 스크롤을 일정길이만큼 내린순간 이벤트 발생
-  * 스크롤을 많이내린상태에서 페이지 이동을 원할때 다시 스크롤을 올리지 않아도 되서 시간이 단축됨 
+  * 사용자 인증 후에 자신이 등록한 고객/판매정보를 변경/삭제 가능
 </br>
 
 
@@ -129,7 +128,6 @@ Customer Relationship Management(고객 관계 관리)</br>
 </br>
 
 ## 아키텍쳐
-<img src="https://github.com/jangyungyeong/SystemCRM/assets/117636044/2d0eaa56-c7df-4fa1-8121-fe638ae16966" width="400" >
 <p align="center"></p></br>
 
   #### 디렉토리 구조
