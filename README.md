@@ -131,7 +131,6 @@ Customer Relationship Management(고객 관계 관리)</br>
 <p align="center"></p></br>
 
   #### 디렉토리 구조
-  </br>
 ![image](https://github.com/jangyungyeong/SystemCRM/assets/117636044/deaab5c4-837c-457e-927a-662578fd5d70)
 
 
